@@ -1,0 +1,240 @@
+CREATE DATABASE cafe_management_db;
+USE cafe_management_db;
+
+
+-- 1. Employees Table
+-- Stores information about cafe employees.
+CREATE TABLE Employees (
+    employee_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    position VARCHAR(50), -- e.g., 'Barista', 'Cashier', 'Manager'
+    contact_number VARCHAR(15),
+    email VARCHAR(100) UNIQUE,
+    hire_date DATE,
+    salary DECIMAL(10, 2)
+);
+
+
+-- 2. Menu_Items Table
+-- Stores details about all items available on the cafe menu.
+CREATE TABLE Menu_Items (
+    item_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    category VARCHAR(50), -- e.g., 'Coffee', 'Tea', 'Pastry', 'Sandwich'
+    is_available BOOLEAN DEFAULT TRUE
+);
+
+-- 3. Customers Table
+-- Stores information about registered customers (optional, but good for loyalty programs).
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    contact_number VARCHAR(15),
+    email VARCHAR(100) UNIQUE,
+    loyalty_points INT DEFAULT 0
+);
+
+-- 4. Orders Table
+-- Records each customer order.
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT, -- Foreign Key, references Customers.customer_id. Can be NULL for walk-in customers.
+    employee_id INT NOT NULL, -- Foreign Key, references Employees.employee_id. The employee who took the order.
+    order_date DATE NOT NULL,
+    order_time TIME NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'Pending', -- e.g., 'Pending', 'Preparing', 'Completed', 'Cancelled'
+    payment_method VARCHAR(50), -- e.g., 'Cash', 'Card', 'Mobile Pay'
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
+);
+
+-- 5. Order_Items Table (Junction Table)
+-- Links Orders to Menu_Items to detail what items are in each order.
+-- This table handles many-to-many relationships between orders and menu items.
+CREATE TABLE Order_Items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL, -- Foreign Key, references Orders.order_id.
+    item_id INT NOT NULL, -- Foreign Key, references Menu_Items.item_id.
+    quantity INT NOT NULL,
+    price_at_order DECIMAL(10, 2) NOT NULL, -- Price of the item at the time of order (useful if prices change).
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (item_id) REFERENCES Menu_Items(item_id)
+);
+
+-- 6. Suppliers Table
+-- Stores information about product suppliers.
+CREATE TABLE Suppliers (
+    supplier_id INT PRIMARY KEY AUTO_INCREMENT,
+    supplier_name VARCHAR(100) NOT NULL UNIQUE,
+    contact_person VARCHAR(100),
+    contact_number VARCHAR(15),
+    email VARCHAR(100) UNIQUE,
+    address VARCHAR(255)
+);
+
+-- 7. Ingredients Table
+-- Stores information about raw ingredients used in menu items.
+CREATE TABLE Ingredients (
+    ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
+    ingredient_name VARCHAR(100) NOT NULL UNIQUE,
+    unit_of_measure VARCHAR(20), -- e.g., 'kg', 'liter', 'gram', 'piece'
+    current_stock DECIMAL(10, 2) DEFAULT 0,
+    min_stock_level DECIMAL(10, 2) DEFAULT 0
+);
+
+-- 8. Recipe_Ingredients Table (Junction Table)
+-- Defines which ingredients are used in which menu items and in what quantities.
+-- This table handles many-to-many relationships between menu items and ingredients.
+CREATE TABLE Recipe_Ingredients (
+    recipe_ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_id INT NOT NULL, -- Foreign Key, references Menu_Items.item_id.
+    ingredient_id INT NOT NULL, -- Foreign Key, references Ingredients.ingredient_id.
+    quantity_needed DECIMAL(10, 2) NOT NULL, -- Quantity of the ingredient needed for one unit of the menu item.
+    FOREIGN KEY (item_id) REFERENCES Menu_Items(item_id),
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredients(ingredient_id)
+);
+
+-- 9. Inventory_Transactions Table
+-- Logs all movements of ingredients (e.g., stock received, stock used).
+CREATE TABLE Inventory_Transactions (
+    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    ingredient_id INT NOT NULL, -- Foreign Key, references Ingredients.ingredient_id.
+    transaction_type VARCHAR(20) NOT NULL, -- e.g., 'Received', 'Used', 'Adjustment'
+    quantity_change DECIMAL(10, 2) NOT NULL, -- Amount of ingredient added or removed (positive for received, negative for used).
+    transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP, -- Automatically sets to current date and time
+    supplier_id INT, -- Foreign Key, references Suppliers.supplier_id. Can be NULL if not a purchase.
+    notes TEXT,
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredients(ingredient_id),
+    FOREIGN KEY (supplier_id) REFERENCES Suppliers(supplier_id)
+);
+
+
+
+
+
+
+
+-- 1. Insert Sample Data into Employees Table
+INSERT INTO Employees (first_name, last_name, position, contact_number, email, hire_date, salary) VALUES
+('Alice', 'Smith', 'Manager', '111-222-3333', 'alice.smith@cafe.com', '2022-01-15', 60000.00),
+('Bob', 'Johnson', 'Barista', '444-555-6666', 'bob.j@cafe.com', '2023-03-01', 35000.00),
+('Charlie', 'Brown', 'Cashier', '777-888-9999', 'charlie.b@cafe.com', '2023-05-10', 30000.00),
+('Diana', 'Prince', 'Barista', '123-456-7890', 'diana.p@cafe.com', '2024-02-20', 36000.00);
+
+-- 2. Insert Sample Data into Menu_Items Table
+INSERT INTO Menu_Items (item_name, description, price, category, is_available) VALUES
+('Espresso', 'Strong shot of coffee', 2.50, 'Coffee', TRUE),
+('Latte', 'Espresso with steamed milk', 4.00, 'Coffee', TRUE),
+('Croissant', 'Flaky pastry', 3.00, 'Pastry', TRUE),
+('Blueberry Muffin', 'Classic blueberry muffin', 3.50, 'Pastry', TRUE),
+('Iced Tea', 'Refreshing black iced tea', 3.00, 'Tea', TRUE),
+('Chicken Sandwich', 'Grilled chicken with lettuce and tomato', 7.50, 'Sandwich', TRUE),
+('Cappuccino', 'Espresso with steamed milk and foam', 4.25, 'Coffee', TRUE);
+
+
+-- 3. Insert Sample Data into Customers Table
+INSERT INTO Customers (first_name, last_name, contact_number, email, loyalty_points) VALUES
+('Emma', 'Davis', '987-654-3210', 'emma.davis@example.com', 150),
+('Frank', 'White', '555-123-4567', 'frank.w@example.com', 50),
+('Grace', 'Taylor', '222-333-4444', 'grace.t@example.com', 200);
+
+
+-- 4. Insert Sample Data into Suppliers Table
+INSERT INTO Suppliers (supplier_name, contact_person, contact_number, email, address) VALUES
+('Coffee Bean Co.', 'John Coffee', '100-200-3000', 'info@coffeebeanco.com', '123 Bean St, Coffee Town'),
+('Dairy Delights', 'Sarah Milk', '101-202-3030', 'sales@dairydelights.com', '456 Farm Rd, Milkville'),
+('Bake Goods Inc.', 'Peter Pastry', '102-203-3040', 'orders@bakegoods.com', '789 Oven Ln, Bakerton');
+
+-- 5. Insert Sample Data into Ingredients Table
+INSERT INTO Ingredients (ingredient_name, unit_of_measure, current_stock, min_stock_level) VALUES
+('Espresso Beans', 'kg', 10.0, 2.0),
+('Milk', 'liter', 50.0, 10.0),
+('Sugar', 'kg', 20.0, 5.0),
+('Flour', 'kg', 15.0, 3.0),
+('Blueberries', 'kg', 5.0, 1.0),
+('Tea Leaves', 'kg', 3.0, 0.5),
+('Chicken Breast', 'kg', 8.0, 2.0),
+('Lettuce', 'piece', 30.0, 5.0);
+
+
+-- 6. Insert Sample Data into Recipe_Ingredients Table
+-- Espresso: Espresso Beans
+INSERT INTO Recipe_Ingredients (item_id, ingredient_id, quantity_needed) VALUES
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Espresso'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Espresso Beans'), 0.018); -- 18g per shot
+
+-- Latte: Espresso Beans, Milk
+INSERT INTO Recipe_Ingredients (item_id, ingredient_id, quantity_needed) VALUES
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Latte'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Espresso Beans'), 0.018),
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Latte'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Milk'), 0.250); -- 250ml milk
+
+-- Croissant: Flour
+INSERT INTO Recipe_Ingredients (item_id, ingredient_id, quantity_needed) VALUES
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Croissant'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Flour'), 0.050); -- 50g flour
+
+-- Blueberry Muffin: Flour, Blueberries
+INSERT INTO Recipe_Ingredients (item_id, ingredient_id, quantity_needed) VALUES
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Blueberry Muffin'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Flour'), 0.080),
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Blueberry Muffin'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Blueberries'), 0.030);
+
+-- Iced Tea: Tea Leaves, Sugar
+INSERT INTO Recipe_Ingredients (item_id, ingredient_id, quantity_needed) VALUES
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Iced Tea'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Tea Leaves'), 0.005),
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Iced Tea'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Sugar'), 0.020);
+
+-- Chicken Sandwich: Chicken Breast, Lettuce
+INSERT INTO Recipe_Ingredients (item_id, ingredient_id, quantity_needed) VALUES
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Chicken Sandwich'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Chicken Breast'), 0.100),
+((SELECT item_id FROM Menu_Items WHERE item_name = 'Chicken Sandwich'), (SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Lettuce'), 0.010);
+
+-- 7. Insert Sample Data into Orders Table
+-- Order 1: Customer Emma, Employee Bob
+INSERT INTO Orders (customer_id, employee_id, order_date, order_time, total_amount, status, payment_method) VALUES
+((SELECT customer_id FROM Customers WHERE first_name = 'Emma'), (SELECT employee_id FROM Employees WHERE first_name = 'Bob'), '2024-07-17', '10:00:00', 6.50, 'Completed', 'Card');
+
+-- Order 2: Walk-in customer, Employee Charlie
+INSERT INTO Orders (customer_id, employee_id, order_date, order_time, total_amount, status, payment_method) VALUES
+(NULL, (SELECT employee_id FROM Employees WHERE first_name = 'Charlie'), '2024-07-17', '10:15:00', 7.00, 'Completed', 'Cash');
+
+-- Order 3: Customer Frank, Employee Bob
+INSERT INTO Orders (customer_id, employee_id, order_date, order_time, total_amount, status, payment_method) VALUES
+((SELECT customer_id FROM Customers WHERE first_name = 'Frank'), (SELECT employee_id FROM Employees WHERE first_name = 'Bob'), '2024-07-17', '10:30:00', 11.50, 'Pending', 'Mobile Pay');
+
+
+-- 8. Insert Sample Data into Order_Items Table
+-- For Order 1 (Emma): Latte, Croissant
+INSERT INTO Order_Items (order_id, item_id, quantity, price_at_order) VALUES
+((SELECT order_id FROM Orders WHERE order_date = '2024-07-17' AND order_time = '10:00:00' AND total_amount = 6.50), (SELECT item_id FROM Menu_Items WHERE item_name = 'Latte'), 1, 4.00),
+((SELECT order_id FROM Orders WHERE order_date = '2024-07-17' AND order_time = '10:00:00' AND total_amount = 6.50), (SELECT item_id FROM Menu_Items WHERE item_name = 'Espresso'), 1, 2.50);
+
+-- For Order 2 (Walk-in): Blueberry Muffin, Iced Tea
+INSERT INTO Order_Items (order_id, item_id, quantity, price_at_order) VALUES
+((SELECT order_id FROM Orders WHERE order_date = '2024-07-17' AND order_time = '10:15:00' AND total_amount = 7.00), (SELECT item_id FROM Menu_Items WHERE item_name = 'Blueberry Muffin'), 1, 3.50),
+((SELECT order_id FROM Orders WHERE order_date = '2024-07-17' AND order_time = '10:15:00' AND total_amount = 7.00), (SELECT item_id FROM Menu_Items WHERE item_name = 'Iced Tea'), 1, 3.50);
+
+-- For Order 3 (Frank): Chicken Sandwich, Latte, Cappuccino
+INSERT INTO Order_Items (order_id, item_id, quantity, price_at_order) VALUES
+((SELECT order_id FROM Orders WHERE order_date = '2024-07-17' AND order_time = '10:30:00' AND total_amount = 11.50), (SELECT item_id FROM Menu_Items WHERE item_name = 'Chicken Sandwich'), 1, 7.50),
+((SELECT order_id FROM Orders WHERE order_date = '2024-07-17' AND order_time = '10:30:00' AND total_amount = 11.50), (SELECT item_id FROM Menu_Items WHERE item_name = 'Latte'), 1, 4.00);
+
+
+-- 9. Insert Sample Data into Inventory_Transactions Table
+-- Received Espresso Beans from Coffee Bean Co.
+INSERT INTO Inventory_Transactions (ingredient_id, transaction_type, quantity_change, transaction_date, supplier_id, notes) VALUES
+((SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Espresso Beans'), 'Received', 5.0, '2024-07-16 09:00:00', (SELECT supplier_id FROM Suppliers WHERE supplier_name = 'Coffee Bean Co.'), 'Bulk order');
+
+-- Used Milk for Latte (from Order 1) - This would typically be triggered by application logic
+INSERT INTO Inventory_Transactions (ingredient_id, transaction_type, quantity_change, transaction_date, supplier_id, notes) VALUES
+((SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Milk'), 'Used', -0.250, '2024-07-17 10:05:00', NULL, 'Used for Latte in Order 1');
+
+-- Received Milk from Dairy Delights
+INSERT INTO Inventory_Transactions (ingredient_id, transaction_type, quantity_change, transaction_date, supplier_id, notes) VALUES
+((SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Milk'), 'Received', 20.0, '2024-07-17 08:30:00', (SELECT supplier_id FROM Suppliers WHERE supplier_name = 'Dairy Delights'), 'Weekly milk delivery');
+
+-- Adjustment for Flour
+INSERT INTO Inventory_Transactions (ingredient_id, transaction_type, quantity_change, transaction_date, supplier_id, notes) VALUES
+((SELECT ingredient_id FROM Ingredients WHERE ingredient_name = 'Flour'), 'Adjustment', -0.5, '2024-07-17 11:00:00', NULL, 'Spillage during transfer');
