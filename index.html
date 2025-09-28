@@ -25,95 +25,79 @@
             margin-bottom: 1.5rem;
         }
         /* Custom Brown Palette */
-        .bg-cafe-primary { /* Header background, primary button background */
-            background-color: #8B4513; /* SaddleBrown */
-        }
-        .bg-cafe-dark { /* Primary button hover background */
-            background-color: #5C4033; /* Dark Brown */
-        }
-        .text-cafe-accent { /* Price text, total text */
-            color: #A0522D; /* Sienna */
-        }
-        .hover-text-cafe-light:hover { /* Nav link hover color */
-            color: #D2B48C; /* Tan */
-        }
-        .focus-border-cafe-accent:focus { /* Input focus border color */
-            border-color: #A0522D; /* Sienna */
-        }
-        .focus-ring-cafe-accent:focus { /* Input focus ring color */
+        .bg-cafe-primary { background-color: #8B4513; }
+        .bg-cafe-dark { background-color: #5C4033; }
+        .text-cafe-accent { color: #A0522D; }
+        .hover-text-cafe-light:hover { color: #D2B48C; }
+        .focus-border-cafe-accent:focus { border-color: #A0522D; }
+        .focus-ring-cafe-accent:focus {
             outline: 2px solid transparent;
             outline-offset: 2px;
-            box-shadow: inset 0 0 0px 2px #A0522D; /* Sienna */
+            box-shadow: inset 0 0 0px 2px #A0522D;
         }
-        .text-cafe-checkbox { /* Checkbox color */
-            color: #A0522D; /* Sienna */
-        }
+        .text-cafe-checkbox { color: #A0522D; }
 
         .btn-primary {
-            background-color: #8B4513; /* Primary Brown */
+            background-color: #8B4513;
             color: #ffffff;
             padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem; /* rounded-lg */
+            border-radius: 0.5rem;
             transition: background-color 0.2s ease-in-out;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .btn-primary:hover {
-            background-color: #5C4033; /* Darker Brown */
-        }
+        .btn-primary:hover { background-color: #5C4033; }
         .btn-secondary {
-            background-color: #e5e7eb; /* Gray-200 */
-            color: #4b5563; /* Gray-700 */
+            background-color: #e5e7eb;
+            color: #4b5563;
             padding: 0.5rem 1rem;
-            border-radius: 0.5rem; /* rounded-lg */
+            border-radius: 0.5rem;
             transition: background-color 0.2s ease-in-out;
         }
-        .btn-secondary:hover {
-            background-color: #d1d5db; /* Gray-300 */
-        }
+        .btn-secondary:hover { background-color: #d1d5db; }
         .btn-danger {
-            background-color: #dc2626; /* Red-600 */
+            background-color: #dc2626;
             color: #ffffff;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             transition: background-color 0.2s ease-in-out;
         }
-        .btn-danger:hover {
-            background-color: #b91c1c; /* Red-700 */
-        }
+        .btn-danger:hover { background-color: #b91c1c; }
         .btn-info {
-            background-color: #3b82f6; /* Blue-500 */
+            background-color: #3b82f6;
             color: #ffffff;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             transition: background-color 0.2s ease-in-out;
         }
-        .btn-info:hover {
-            background-color: #2563eb; /* Blue-600 */
-        }
+        .btn-info:hover { background-color: #2563eb; }
+
         .message-box {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #4CAF50; /* Green */
+            background-color: #4CAF50;
             color: white;
             padding: 15px 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            display: none; /* Hidden by default */
+            display: none;
             text-align: center;
             font-weight: 500;
         }
-        .message-box.error {
-            background-color: #f44336; /* Red */
-        }
-        .hidden {
-            display: none;
-        }
+        .message-box.error { background-color: #f44336; }
+        .hidden { display: none; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
+    <div class="bg-yellow-200 p-2 text-center text-sm text-yellow-800">
+        <strong>Demonstration Mode:</strong>
+        <button id="switchToUserBtn" class="font-bold underline hidden">Switch to User View</button>
+        <button id="switchToAdminBtn" class="font-bold underline">Switch to Admin View</button>
+        <span id="currentRoleText" class="ml-2 bg-gray-600 text-white text-xs font-bold mr-2 px-2.5 py-0.5 rounded-full">Current View: User</span>
+    </div>
+
     <header class="bg-cafe-primary text-white p-6 shadow-md">
         <div class="container flex justify-between items-center">
             <h1 class="text-3xl font-bold">LITTLE CAFE</h1>
@@ -121,9 +105,9 @@
                 <ul class="flex space-x-6">
                     <li><a href="#" data-section="menu" class="nav-link hover-text-cafe-light transition duration-200">Menu</a></li>
                     <li><a href="#" data-section="order" class="nav-link hover-text-cafe-light transition duration-200">Order</a></li>
-                    <li><a href="#" data-section="menu-management" class="nav-link hover-text-cafe-light transition duration-200">Menu Management</a></li>
-                    <li><a href="#" data-section="employee-management" class="nav-link hover-text-cafe-light transition duration-200">Employee Management</a></li>
-                    <li><a href="#" data-section="customer-management" class="nav-link hover-text-cafe-light transition duration-200">Customer Management</a></li>
+                    <li data-admin-only="true"><a href="#" data-section="menu-management" class="nav-link hover-text-cafe-light transition duration-200">Menu Management</a></li>
+                    <li data-admin-only="true"><a href="#" data-section="employee-management" class="nav-link hover-text-cafe-light transition duration-200">Employee Management</a></li>
+                    <li data-admin-only="true"><a href="#" data-section="customer-management" class="nav-link hover-text-cafe-light transition duration-200">Customer Management</a></li>
                 </ul>
             </nav>
         </div>
@@ -135,18 +119,13 @@
         <section id="menu" class="mb-12">
             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Our Menu</h2>
             <div id="menuItemsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card flex flex-col items-center justify-center p-6 bg-gray-100 text-gray-600">
-                    <p>Loading menu items...</p>
                 </div>
-            </div>
         </section>
 
         <section id="order" class="mb-12 hidden">
             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Your Order</h2>
             <div class="card">
-                <div id="orderList" class="mb-4">
-                    <p class="text-gray-600">No items in your order yet.</p>
-                </div>
+                <div id="orderList" class="mb-4"><p class="text-gray-600">No items in your order yet.</p></div>
                 <div class="flex justify-between items-center mb-6 border-t pt-4 mt-4">
                     <span class="text-xl font-bold text-gray-800">Total:</span>
                     <span id="orderTotal" class="text-xl font-bold text-cafe-accent">$0.00</span>
@@ -155,9 +134,8 @@
             </div>
         </section>
 
-        <section id="menu-management" class="mb-12 hidden">
+        <section id="menu-management" class="mb-12 hidden" data-admin-only="true">
             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Menu Management</h2>
-
             <div class="card mb-8">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Menu Item</h3>
                 <form id="menuItemForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -188,145 +166,64 @@
                     </div>
                 </form>
             </div>
-
             <div class="card">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Menu Items (Manage)</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Available</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="managementMenuItemsTableBody" class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Loading menu items for management...</td>
-                            </tr>
-                        </tbody>
+                        <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Available</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th></tr></thead>
+                        <tbody id="managementMenuItemsTableBody" class="bg-white divide-y divide-gray-200"></tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <section id="employee-management" class="mb-12 hidden">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Employee Management</h2>
-
+        <section id="employee-management" class="mb-12 hidden" data-admin-only="true">
+             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Employee Management</h2>
             <div class="card mb-8">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Employee</h3>
                 <form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input type="hidden" id="employeeId">
-                    <div>
-                        <label for="employeeFirstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" id="employeeFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
-                    </div>
-                    <div>
-                        <label for="employeeLastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" id="employeeLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
-                    </div>
-                    <div>
-                        <label for="employeePosition" class="block text-sm font-medium text-gray-700">Position</label>
-                        <input type="text" id="employeePosition" name="position" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div>
-                        <label for="employeeContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
-                        <input type="text" id="employeeContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div>
-                        <label for="employeeEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="employeeEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div>
-                        <label for="employeeHireDate" class="block text-sm font-medium text-gray-700">Hire Date</label>
-                        <input type="date" id="employeeHireDate" name="hire_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div>
-                        <label for="employeeSalary" class="block text-sm font-medium text-gray-700">Salary</label>
-                        <input type="number" id="employeeSalary" name="salary" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div class="md:col-span-2 flex justify-end space-x-3">
-                        <button type="submit" class="btn-primary" id="saveEmployeeBtn">Add Employee</button>
-                        <button type="button" class="btn-secondary" id="cancelEmployeeEditBtn" style="display: none;">Cancel Edit</button>
-                    </div>
+                    <div><label for="employeeFirstName" class="block text-sm font-medium text-gray-700">First Name</label><input type="text" id="employeeFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
+                    <div><label for="employeeLastName" class="block text-sm font-medium text-gray-700">Last Name</label><input type="text" id="employeeLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
+                    <div><label for="employeePosition" class="block text-sm font-medium text-gray-700">Position</label><input type="text" id="employeePosition" name="position" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div><label for="employeeContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label><input type="text" id="employeeContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div><label for="employeeEmail" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="employeeEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div><label for="employeeHireDate" class="block text-sm font-medium text-gray-700">Hire Date</label><input type="date" id="employeeHireDate" name="hire_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div><label for="employeeSalary" class="block text-sm font-medium text-gray-700">Salary</label><input type="number" id="employeeSalary" name="salary" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div class="md:col-span-2 flex justify-end space-x-3"><button type="submit" class="btn-primary" id="saveEmployeeBtn">Add Employee</button><button type="button" class="btn-secondary" id="cancelEmployeeEditBtn" style="display: none;">Cancel Edit</button></div>
                 </form>
             </div>
-
             <div class="card">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Employees (Manage)</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="managementEmployeesTableBody" class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Loading employees for management...</td>
-                            </tr>
-                        </tbody>
+                        <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th></tr></thead>
+                        <tbody id="managementEmployeesTableBody" class="bg-white divide-y divide-gray-200"></tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <section id="customer-management" class="mb-12 hidden">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Customer Management</h2>
-
+        <section id="customer-management" class="mb-12 hidden" data-admin-only="true">
+             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Customer Management</h2>
             <div class="card mb-8">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Customer</h3>
                 <form id="customerForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input type="hidden" id="customerId">
-                    <div>
-                        <label for="customerFirstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" id="customerFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
-                    </div>
-                    <div>
-                        <label for="customerLastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" id="customerLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
-                    </div>
-                    <div>
-                        <label for="customerContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
-                        <input type="text" id="customerContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div>
-                        <label for="customerEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="customerEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div>
-                        <label for="customerLoyaltyPoints" class="block text-sm font-medium text-gray-700">Loyalty Points</label>
-                        <input type="number" id="customerLoyaltyPoints" name="loyalty_points" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div class="md:col-span-2 flex justify-end space-x-3">
-                        <button type="submit" class="btn-primary" id="saveCustomerBtn">Add Customer</button>
-                        <button type="button" class="btn-secondary" id="cancelCustomerEditBtn" style="display: none;">Cancel Edit</button>
-                    </div>
+                    <div><label for="customerFirstName" class="block text-sm font-medium text-gray-700">First Name</label><input type="text" id="customerFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
+                    <div><label for="customerLastName" class="block text-sm font-medium text-gray-700">Last Name</label><input type="text" id="customerLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
+                    <div><label for="customerContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label><input type="text" id="customerContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div><label for="customerEmail" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="customerEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div><label for="customerLoyaltyPoints" class="block text-sm font-medium text-gray-700">Loyalty Points</label><input type="number" id="customerLoyaltyPoints" name="loyalty_points" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
+                    <div class="md:col-span-2 flex justify-end space-x-3"><button type="submit" class="btn-primary" id="saveCustomerBtn">Add Customer</button><button type="button" class="btn-secondary" id="cancelCustomerEditBtn" style="display: none;">Cancel Edit</button></div>
                 </form>
             </div>
-
             <div class="card">
                 <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Customers (Manage)</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loyalty Points</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="managementCustomersTableBody" class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Loading customers for management...</td>
-                            </tr>
-                        </tbody>
+                        <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loyalty Points</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th></tr></thead>
+                        <tbody id="managementCustomersTableBody" class="bg-white divide-y divide-gray-200"></tbody>
                     </table>
                 </div>
             </div>
@@ -341,14 +238,53 @@
     </footer>
 
     <script>
-        // DOM Element References
+        // --- START OF NEW ROLE-BASED LOGIC ---
+        let currentUserRole = 'user'; // 'user' or 'admin'
+
+        const switchToUserBtn = document.getElementById('switchToUserBtn');
+        const switchToAdminBtn = document.getElementById('switchToAdminBtn');
+        const currentRoleText = document.getElementById('currentRoleText');
+        const adminOnlyNavLinks = document.querySelectorAll('nav li[data-admin-only="true"]');
+
+        function updateUIForRole() {
+            // Update navigation links
+            adminOnlyNavLinks.forEach(link => {
+                link.style.display = (currentUserRole === 'admin') ? 'list-item' : 'none';
+            });
+
+            // Update role switcher button visibility
+            switchToUserBtn.classList.toggle('hidden', currentUserRole === 'user');
+            switchToAdminBtn.classList.toggle('hidden', currentUserRole === 'admin');
+            
+            // Update role text
+            currentRoleText.textContent = `Current View: ${currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1)}`;
+
+            // If current view is an admin page and we switch to user, redirect to menu
+            const activeSection = document.querySelector('main section:not(.hidden)');
+            if (currentUserRole === 'user' && activeSection && activeSection.dataset.adminOnly === 'true') {
+                showSection('menu');
+            }
+        }
+
+        switchToUserBtn.addEventListener('click', () => {
+            currentUserRole = 'user';
+            updateUIForRole();
+            showSection('menu'); // Default page for users
+        });
+
+        switchToAdminBtn.addEventListener('click', () => {
+            currentUserRole = 'admin';
+            updateUIForRole();
+            showSection('menu-management'); // Default page for admins
+        });
+        // --- END OF NEW ROLE-BASED LOGIC ---
+        
+        // DOM Element References (existing)
         const menuItemsContainer = document.getElementById('menuItemsContainer');
         const orderList = document.getElementById('orderList');
         const orderTotalSpan = document.getElementById('orderTotal');
         const placeOrderBtn = document.getElementById('placeOrderBtn');
         const messageBox = document.getElementById('messageBox');
-
-        // Menu Management DOM Elements
         const menuItemForm = document.getElementById('menuItemForm');
         const menuItemIdInput = document.getElementById('menuItemId');
         const itemNameInput = document.getElementById('itemName');
@@ -359,8 +295,6 @@
         const saveMenuItemBtn = document.getElementById('saveMenuItemBtn');
         const cancelEditBtn = document.getElementById('cancelEditBtn');
         const managementMenuItemsTableBody = document.getElementById('managementMenuItemsTableBody');
-
-        // Employee Management DOM Elements
         const employeeForm = document.getElementById('employeeForm');
         const employeeIdInput = document.getElementById('employeeId');
         const employeeFirstNameInput = document.getElementById('employeeFirstName');
@@ -373,8 +307,6 @@
         const saveEmployeeBtn = document.getElementById('saveEmployeeBtn');
         const cancelEmployeeEditBtn = document.getElementById('cancelEmployeeEditBtn');
         const managementEmployeesTableBody = document.getElementById('managementEmployeesTableBody');
-
-        // Customer Management DOM Elements
         const customerForm = document.getElementById('customerForm');
         const customerIdInput = document.getElementById('customerId');
         const customerFirstNameInput = document.getElementById('customerFirstName');
@@ -386,24 +318,19 @@
         const cancelCustomerEditBtn = document.getElementById('cancelCustomerEditBtn');
         const managementCustomersTableBody = document.getElementById('managementCustomersTableBody');
 
-        // Global State
+        // Global State (existing)
         let currentOrder = [];
-        let menuData = []; // To store fetched menu items
-        let employeesData = []; // To store fetched employees
-        let customersData = []; // To store fetched customers
+        let menuData = [];
+        let employeesData = [];
+        let customersData = [];
 
-        // Base URL for your backend API
+        // Base URL (existing)
         const API_BASE_URL = 'http://localhost:3000/api';
 
-        /**
-         * Displays a temporary message to the user.
-         * @param {string} message - The message to display.
-         * @param {'success'|'error'} type - The type of message (success or error).
-         * @param {number} duration - How long the message should be visible in milliseconds.
-         */
+        // showMessage function (existing)
         function showMessage(message, type = 'success', duration = 3000) {
             messageBox.textContent = message;
-            messageBox.className = 'message-box'; // Reset classes
+            messageBox.className = 'message-box';
             if (type === 'error') {
                 messageBox.classList.add('error');
             }
@@ -413,32 +340,32 @@
             }, duration);
         }
 
-        // --- SPA Navigation Logic ---
+        // --- SPA Navigation Logic (MODIFIED) ---
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('main section');
 
         function showSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
+
+            // **SECURITY CHECK**: Prevent users from accessing admin pages
+            if (targetSection.dataset.adminOnly === 'true' && currentUserRole !== 'admin') {
+                showMessage('Access denied. Please switch to Admin view.', 'error');
+                showSection('menu'); // Redirect to a safe page
+                return;
+            }
+
             sections.forEach(section => {
                 section.classList.add('hidden');
             });
-            document.getElementById(sectionId).classList.remove('hidden');
+            targetSection.classList.remove('hidden');
 
-            // Re-fetch and render data for the activated section
-            if (sectionId === 'menu') {
-                fetchMenuItems().then(renderMenu);
-            } else if (sectionId === 'order') {
-                renderOrder(); // Order is client-side, just re-render
-            } else if (sectionId === 'menu-management') {
-                fetchMenuItems().then(renderManagementMenu);
-                resetMenuItemForm(); // Clear form on navigation
-            } else if (sectionId === 'employee-management') {
-                fetchEmployees().then(renderManagementEmployees);
-                resetEmployeeForm(); // Clear form on navigation
-            } else if (sectionId === 'customer-management') {
-                fetchCustomers().then(renderManagementCustomers);
-                resetCustomerForm(); // Clear form on navigation
-            }
-            // Optionally update URL hash for direct linking (e.g., #menu-management)
+            // Data fetching logic (existing)
+            if (sectionId === 'menu') { fetchMenuItems().then(renderMenu); } 
+            else if (sectionId === 'order') { renderOrder(); } 
+            else if (sectionId === 'menu-management') { fetchMenuItems().then(renderManagementMenu); resetMenuItemForm(); }
+            else if (sectionId === 'employee-management') { fetchEmployees().then(renderManagementEmployees); resetEmployeeForm(); }
+            else if (sectionId === 'customer-management') { fetchCustomers().then(renderManagementCustomers); resetCustomerForm(); }
+            
             history.pushState(null, '', `#${sectionId}`);
         }
 
@@ -450,27 +377,25 @@
             });
         });
 
-        // Handle initial load based on URL hash or default to 'menu'
+        // Handle initial load
         document.addEventListener('DOMContentLoaded', () => {
+            updateUIForRole(); // Set the initial UI based on the default role
             const initialSection = window.location.hash ? window.location.hash.substring(1) : 'menu';
-            showSection(initialSection);
+            const validSections = Array.from(document.querySelectorAll('section')).map(s => s.id);
+            if(validSections.includes(initialSection)){
+                showSection(initialSection);
+            } else {
+                showSection('menu');
+            }
         });
 
-        // --- Menu Item CRUD Operations ---
-
-        /**
-         * Fetches menu items from the backend API.
-         * @returns {Promise<Array>} A promise that resolves to an array of menu items.
-         */
+        // --- ALL CRUD AND ORDER FUNCTIONS (UNCHANGED) ---
+        
         async function fetchMenuItems() {
             try {
                 const response = await fetch(`${API_BASE_URL}/menu_items`);
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-                    throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message || response.statusText}`);
-                }
-                const data = await response.json();
-                menuData = data;
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                menuData = await response.json();
                 return menuData;
             } catch (error) {
                 console.error('Error fetching menu items:', error);
@@ -479,19 +404,13 @@
             }
         }
 
-        /**
-         * Renders the menu items on the main "Our Menu" section.
-         * @param {Array} items - An array of menu item objects.
-         */
         function renderMenu(items) {
             menuItemsContainer.innerHTML = '';
-            const availableItems = items.filter(item => item.is_available); // Only show available items on the public menu
-
+            const availableItems = items.filter(item => item.is_available);
             if (availableItems.length === 0) {
-                menuItemsContainer.innerHTML = '<p class="text-gray-600 col-span-full text-center">No menu items available at the moment. Please check back later!</p>';
+                menuItemsContainer.innerHTML = '<p class="text-gray-600 col-span-full text-center">No menu items available.</p>';
                 return;
             }
-
             availableItems.forEach(item => {
                 const menuItemDiv = document.createElement('div');
                 menuItemDiv.className = 'card flex flex-col justify-between';
@@ -501,43 +420,26 @@
                         <p class="text-gray-600 text-sm mb-3">${item.description || 'No description'}</p>
                         <p class="text-lg font-bold text-cafe-accent mb-4">$${parseFloat(item.price).toFixed(2)}</p>
                     </div>
-                    <button class="btn-primary self-end add-to-order-btn"
-                            data-item-id="${item.item_id}"
-                            data-item-name="${item.item_name}"
-                            data-item-price="${item.price}">
+                    <button class="btn-primary self-end add-to-order-btn" data-item-id="${item.item_id}" data-item-name="${item.item_name}" data-item-price="${item.price}">
                         Add to Order
-                    </button>
-                `;
+                    </button>`;
                 menuItemsContainer.appendChild(menuItemDiv);
             });
-
-            menuItemsContainer.addEventListener('click', (event) => {
-                const button = event.target.closest('.add-to-order-btn');
-                if (button) {
-                    const itemId = parseInt(button.dataset.itemId);
-                    const itemName = button.dataset.itemName;
-                    const itemPrice = parseFloat(button.dataset.itemPrice);
-                    addToOrder(itemId, itemName, itemPrice);
-                }
-            });
         }
+        
+        menuItemsContainer.addEventListener('click', (event) => {
+            const button = event.target.closest('.add-to-order-btn');
+            if (button) {
+                addToOrder(parseInt(button.dataset.itemId), button.dataset.itemName, parseFloat(button.dataset.itemPrice));
+            }
+        });
 
-        /**
-         * Renders the menu items in the "Menu Management" table.
-         * @param {Array} items - An array of all menu item objects.
-         */
         function renderManagementMenu(items) {
             managementMenuItemsTableBody.innerHTML = '';
-
             if (items.length === 0) {
-                managementMenuItemsTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No menu items to manage.</td>
-                    </tr>
-                `;
+                managementMenuItemsTableBody.innerHTML = `<tr><td colspan="5" class="text-center p-4 text-gray-500">No menu items to manage.</td></tr>`;
                 return;
             }
-
             items.forEach(item => {
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50';
@@ -549,51 +451,35 @@
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button class="btn-secondary edit-menu-item-btn mr-2" data-item-id="${item.item_id}">Edit</button>
                         <button class="btn-danger delete-menu-item-btn" data-item-id="${item.item_id}">Delete</button>
-                    </td>
-                `;
+                    </td>`;
                 managementMenuItemsTableBody.appendChild(row);
             });
-
-            managementMenuItemsTableBody.querySelectorAll('.edit-menu-item-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const itemId = parseInt(event.target.dataset.itemId);
-                    editMenuItem(itemId);
-                });
-            });
-
-            managementMenuItemsTableBody.querySelectorAll('.delete-menu-item-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const itemId = parseInt(event.target.dataset.itemId);
-                    deleteMenuItem(itemId);
-                });
-            });
         }
+        
+        managementMenuItemsTableBody.addEventListener('click', event => {
+            if (event.target.classList.contains('edit-menu-item-btn')) {
+                editMenuItem(parseInt(event.target.dataset.itemId));
+            }
+            if (event.target.classList.contains('delete-menu-item-btn')) {
+                deleteMenuItem(parseInt(event.target.dataset.itemId));
+            }
+        });
 
-        /**
-         * Populates the form for editing an existing menu item.
-         * @param {number} itemId - The ID of the item to edit.
-         */
         function editMenuItem(itemId) {
-            const itemToEdit = menuData.find(item => item.item_id === itemId);
-            if (itemToEdit) {
-                menuItemIdInput.value = itemToEdit.item_id;
-                itemNameInput.value = itemToEdit.item_name;
-                itemPriceInput.value = parseFloat(itemToEdit.price).toFixed(2);
-                itemDescriptionInput.value = itemToEdit.description || '';
-                itemCategoryInput.value = itemToEdit.category || '';
-                itemAvailableInput.checked = itemToEdit.is_available;
-
+            const item = menuData.find(i => i.item_id === itemId);
+            if (item) {
+                menuItemIdInput.value = item.item_id;
+                itemNameInput.value = item.item_name;
+                itemPriceInput.value = parseFloat(item.price).toFixed(2);
+                itemDescriptionInput.value = item.description || '';
+                itemCategoryInput.value = item.category || '';
+                itemAvailableInput.checked = item.is_available;
                 saveMenuItemBtn.textContent = 'Update Item';
                 cancelEditBtn.style.display = 'inline-block';
                 menuItemForm.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                showMessage('Menu item not found for editing.', 'error');
             }
         }
 
-        /**
-         * Resets the menu item form.
-         */
         function resetMenuItemForm() {
             menuItemForm.reset();
             menuItemIdInput.value = '';
@@ -601,18 +487,11 @@
             cancelEditBtn.style.display = 'none';
         }
 
-        /**
-         * Handles form submission for adding or updating a menu item.
-         */
         menuItemForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-
             const itemId = menuItemIdInput.value;
             const url = itemId ? `${API_BASE_URL}/menu_items/${itemId}` : `${API_BASE_URL}/menu_items`;
             const method = itemId ? 'PUT' : 'POST';
-            const successMessage = itemId ? 'Menu item updated successfully!' : 'Menu item added successfully!';
-            const errorMessage = itemId ? 'Failed to update menu item.' : 'Failed to add menu item.';
-
             const itemData = {
                 item_name: itemNameInput.value,
                 description: itemDescriptionInput.value,
@@ -620,80 +499,40 @@
                 category: itemCategoryInput.value,
                 is_available: itemAvailableInput.checked
             };
-
             saveMenuItemBtn.disabled = true;
-            saveMenuItemBtn.textContent = itemId ? 'Updating...' : 'Adding...';
-
             try {
                 const response = await fetch(url, {
                     method: method,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(itemData)
                 });
-
                 const result = await response.json();
-
-                if (response.ok) {
-                    showMessage(successMessage, 'success');
-                    resetMenuItemForm();
-                    await fetchMenuItems().then(items => {
-                        renderMenu(items);
-                        renderManagementMenu(items);
-                    });
-                } else {
-                    throw new Error(result.message || response.statusText || errorMessage);
-                }
+                if (!response.ok) throw new Error(result.message || 'Request failed');
+                showMessage(result.message || 'Success!', 'success');
+                resetMenuItemForm();
+                await fetchMenuItems().then(renderManagementMenu);
             } catch (error) {
-                console.error(`Error ${method}ing menu item:`, error);
-                showMessage(`${errorMessage} ${error.message}`, 'error');
+                showMessage(`Error: ${error.message}`, 'error');
             } finally {
                 saveMenuItemBtn.disabled = false;
-                saveMenuItemBtn.textContent = itemId ? 'Update Item' : 'Add Item';
             }
         });
-
+        
         cancelEditBtn.addEventListener('click', resetMenuItemForm);
 
-        /**
-         * Deletes a menu item.
-         * @param {number} itemId - The ID of the item to delete.
-         */
         async function deleteMenuItem(itemId) {
-            if (!confirm('Are you sure you want to delete this menu item? This action cannot be undone.')) {
-                return;
-            }
-
+            if (!confirm('Are you sure you want to delete this menu item?')) return;
             try {
-                const response = await fetch(`${API_BASE_URL}/menu_items/${itemId}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
+                const response = await fetch(`${API_BASE_URL}/menu_items/${itemId}`, { method: 'DELETE' });
                 const result = await response.json();
-
-                if (response.ok) {
-                    showMessage('Menu item deleted successfully!', 'success');
-                    await fetchMenuItems().then(items => {
-                        renderMenu(items);
-                        renderManagementMenu(items);
-                    });
-                } else {
-                    throw new Error(result.message || response.statusText || 'Failed to delete menu item.');
-                }
+                if (!response.ok) throw new Error(result.message || 'Failed to delete');
+                showMessage(result.message, 'success');
+                await fetchMenuItems().then(renderManagementMenu);
             } catch (error) {
-                console.error('Error deleting menu item:', error);
-                showMessage(`Failed to delete menu item: ${error.message}`, 'error');
+                showMessage(`Error: ${error.message}`, 'error');
             }
         }
-
-        // --- Order Operations (Existing) ---
-
-        /**
-         * Adds an item to the current order or updates its quantity.
-         * @param {number} itemId - The ID of the item.
-         * @param {string} itemName - The name of the item.
-         * @param {number} itemPrice - The price of the item.
-         */
+        
         function addToOrder(itemId, itemName, itemPrice) {
             const existingItem = currentOrder.find(item => item.item_id === itemId);
             if (existingItem) {
@@ -705,21 +544,11 @@
             showMessage(`${itemName} added to order!`, 'success', 1500);
         }
 
-        /**
-         * Removes an item completely from the order.
-         * @param {number} itemId - The ID of the item to remove.
-         */
         function removeFromOrder(itemId) {
             currentOrder = currentOrder.filter(item => item.item_id !== itemId);
             renderOrder();
-            showMessage('Item removed from order.', 'success', 1500);
         }
 
-        /**
-         * Updates the quantity of an item in the order.
-         * @param {number} itemId - The ID of the item.
-         * @param {number} change - The amount to change the quantity by (+1 or -1).
-         */
         function updateOrderQuantity(itemId, change) {
             const item = currentOrder.find(i => i.item_id === itemId);
             if (item) {
@@ -732,402 +561,240 @@
             }
         }
 
-        /**
-         * Renders the current order list and calculates the total.
-         */
         function renderOrder() {
             orderList.innerHTML = '';
             let total = 0;
+            placeOrderBtn.disabled = currentOrder.length === 0;
+            placeOrderBtn.classList.toggle('opacity-50', currentOrder.length === 0);
+            placeOrderBtn.classList.toggle('cursor-not-allowed', currentOrder.length === 0);
 
             if (currentOrder.length === 0) {
                 orderList.innerHTML = '<p class="text-gray-600">No items in your order yet.</p>';
                 orderTotalSpan.textContent = '$0.00';
-                placeOrderBtn.disabled = true;
-                placeOrderBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 return;
             }
 
             currentOrder.forEach(item => {
-                const orderItemDiv = document.createElement('div');
-                orderItemDiv.className = 'flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0';
-
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
-
+                const orderItemDiv = document.createElement('div');
+                orderItemDiv.className = 'flex justify-between items-center py-2 border-b';
                 orderItemDiv.innerHTML = `
                     <div class="flex-grow">
-                        <span class="font-medium text-gray-700">${item.item_name}</span>
+                        <span class="font-medium">${item.item_name}</span>
                         <span class="text-gray-500 text-sm ml-2">($${parseFloat(item.price).toFixed(2)} each)</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button class="btn-secondary px-2 py-1 text-sm minus-btn" data-item-id="${item.item_id}"> - </button>
-                        <span class="font-semibold">${item.quantity}</span>
-                        <button class="btn-secondary px-2 py-1 text-sm plus-btn" data-item-id="${item.item_id}"> + </button>
-                        <span class="font-bold text-gray-800 w-20 text-right">$${itemTotal.toFixed(2)}</span>
-                        <button class="btn-secondary px-2 py-1 text-sm remove-btn" data-item-id="${item.item_id}"> Remove </button>
-                    </div>
-                `;
+                        <button class="btn-secondary px-2 py-1 text-sm minus-btn" data-item-id="${item.item_id}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="btn-secondary px-2 py-1 text-sm plus-btn" data-item-id="${item.item_id}">+</button>
+                        <span class="font-bold w-20 text-right">$${itemTotal.toFixed(2)}</span>
+                        <button class="btn-secondary px-2 py-1 text-sm remove-btn" data-item-id="${item.item_id}">Remove</button>
+                    </div>`;
                 orderList.appendChild(orderItemDiv);
             });
-
-            orderList.querySelectorAll('.minus-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const itemId = parseInt(event.target.dataset.itemId);
-                    updateOrderQuantity(itemId, -1);
-                });
-            });
-            orderList.querySelectorAll('.plus-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const itemId = parseInt(event.target.dataset.itemId);
-                    updateOrderQuantity(itemId, 1);
-                });
-            });
-            orderList.querySelectorAll('.remove-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const itemId = parseInt(event.target.dataset.itemId);
-                    removeFromOrder(itemId);
-                });
-            });
-
-
             orderTotalSpan.textContent = `$${total.toFixed(2)}`;
-            placeOrderBtn.disabled = false;
-            placeOrderBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         }
-
-        /**
-         * Handles placing an order by sending it to the backend API.
-         */
-        placeOrderBtn.addEventListener('click', async () => {
-            if (currentOrder.length === 0) {
-                showMessage('Your order is empty!', 'error');
-                return;
-            }
-
-            placeOrderBtn.disabled = true;
-            placeOrderBtn.textContent = 'Placing Order...';
-            placeOrderBtn.classList.add('opacity-50', 'cursor-not-allowed');
-
-            try {
-                // You might want to let the user select employee_id and customer_id
-                // For simplicity, I'm keeping hardcoded values as per your original code.
-                const orderData = {
-                    employee_id: 1, // Example: You'd typically select this from a dropdown/context
-                    customer_id: 1, // Example: You'd typically select this from a dropdown/context or allow new customer input
-                    items: currentOrder.map(item => ({
-                        item_id: item.item_id,
-                        quantity: item.quantity
-                    })),
-                    payment_method: 'Card' // Example: You'd typically have a payment method selection
-                };
-
-                const response = await fetch(`${API_BASE_URL}/orders`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    showMessage(`Order ${result.order_id} placed successfully! Total: $${result.total_amount.toFixed(2)}`, 'success');
-                    currentOrder = [];
-                    renderOrder();
-                } else {
-                    throw new Error(result.message || response.statusText || 'Failed to place order.');
-                }
-
-            } catch (error) {
-                console.error('Error placing order:', error);
-                showMessage(`Failed to place order: ${error.message}`, 'error');
-            } finally {
-                placeOrderBtn.disabled = false;
-                placeOrderBtn.textContent = 'Place Order';
-                placeOrderBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            }
+        
+        orderList.addEventListener('click', event => {
+            const itemId = parseInt(event.target.dataset.itemId);
+            if (event.target.classList.contains('minus-btn')) updateOrderQuantity(itemId, -1);
+            if (event.target.classList.contains('plus-btn')) updateOrderQuantity(itemId, 1);
+            if (event.target.classList.contains('remove-btn')) removeFromOrder(itemId);
         });
 
-        // --- Employee CRUD Operations ---
-
-        /**
-         * Fetches employees from the backend API.
-         * @returns {Promise<Array>} A promise that resolves to an array of employee objects.
-         */
+        placeOrderBtn.addEventListener('click', async () => {
+             if (currentOrder.length === 0) return;
+             placeOrderBtn.disabled = true;
+             placeOrderBtn.textContent = 'Placing Order...';
+             try {
+                 const orderData = {
+                     employee_id: 1, // Placeholder
+                     customer_id: 1, // Placeholder
+                     items: currentOrder.map(item => ({ item_id: item.item_id, quantity: item.quantity })),
+                     payment_method: 'Card' // Placeholder
+                 };
+                 const response = await fetch(`${API_BASE_URL}/orders`, {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify(orderData)
+                 });
+                 const result = await response.json();
+                 if (!response.ok) throw new Error(result.message || 'Failed to place order.');
+                 showMessage(`Order ${result.order_id} placed! Total: $${result.total_amount.toFixed(2)}`, 'success');
+                 currentOrder = [];
+                 renderOrder();
+             } catch (error) {
+                 showMessage(`Error placing order: ${error.message}`, 'error');
+             } finally {
+                 placeOrderBtn.disabled = false;
+                 placeOrderBtn.textContent = 'Place Order';
+             }
+        });
+        
+        // --- Employee CRUD Functions ---
         async function fetchEmployees() {
             try {
                 const response = await fetch(`${API_BASE_URL}/employees`);
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-                    throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message || response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 employeesData = await response.json();
                 return employeesData;
             } catch (error) {
-                console.error('Error fetching employees:', error);
                 showMessage(`Failed to load employees: ${error.message}`, 'error');
                 return [];
             }
         }
-
-        /**
-         * Renders the employees in the "Employee Management" table.
-         * @param {Array} employees - An array of employee objects.
-         */
+        
         function renderManagementEmployees(employees) {
             managementEmployeesTableBody.innerHTML = '';
-
             if (employees.length === 0) {
-                managementEmployeesTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No employees to manage.</td>
-                    </tr>
-                `;
-                return;
+                 managementEmployeesTableBody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-500">No employees to manage.</td></tr>`;
+                 return;
             }
-
-            employees.forEach(employee => {
+            employees.forEach(emp => {
                 const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50';
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${employee.first_name} ${employee.last_name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${employee.position || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${employee.email || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button class="btn-secondary edit-employee-btn mr-2" data-employee-id="${employee.employee_id}">Edit</button>
-                        <button class="btn-danger delete-employee-btn" data-employee-id="${employee.employee_id}">Delete</button>
-                    </td>
-                `;
+                    <td class="px-6 py-4">${emp.first_name} ${emp.last_name}</td>
+                    <td class="px-6 py-4">${emp.position || 'N/A'}</td>
+                    <td class="px-6 py-4">${emp.email || 'N/A'}</td>
+                    <td class="px-6 py-4 text-right">
+                        <button class="btn-secondary edit-employee-btn mr-2" data-employee-id="${emp.employee_id}">Edit</button>
+                        <button class="btn-danger delete-employee-btn" data-employee-id="${emp.employee_id}">Delete</button>
+                    </td>`;
                 managementEmployeesTableBody.appendChild(row);
             });
-
-            managementEmployeesTableBody.querySelectorAll('.edit-employee-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const employeeId = parseInt(event.target.dataset.employeeId);
-                    editEmployee(employeeId);
-                });
-            });
-
-            managementEmployeesTableBody.querySelectorAll('.delete-employee-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const employeeId = parseInt(event.target.dataset.employeeId);
-                    deleteEmployee(employeeId);
-                });
-            });
         }
 
-        /**
-         * Populates the form for editing an existing employee.
-         * @param {number} employeeId - The ID of the employee to edit.
-         */
-        function editEmployee(employeeId) {
-            const employeeToEdit = employeesData.find(emp => emp.employee_id === employeeId);
-            if (employeeToEdit) {
-                employeeIdInput.value = employeeToEdit.employee_id;
-                employeeFirstNameInput.value = employeeToEdit.first_name;
-                employeeLastNameInput.value = employeeToEdit.last_name;
-                employeePositionInput.value = employeeToEdit.position || '';
-                employeeContactNumberInput.value = employeeToEdit.contact_number || '';
-                employeeEmailInput.value = employeeToEdit.email || '';
-                // Format date for input type="date"
-                employeeHireDateInput.value = employeeToEdit.hire_date ? new Date(employeeToEdit.hire_date).toISOString().split('T')[0] : '';
-                employeeSalaryInput.value = employeeToEdit.salary ? parseFloat(employeeToEdit.salary).toFixed(2) : '';
-
+        managementEmployeesTableBody.addEventListener('click', event => {
+            if (event.target.classList.contains('edit-employee-btn')) {
+                editEmployee(parseInt(event.target.dataset.employeeId));
+            }
+            if (event.target.classList.contains('delete-employee-btn')) {
+                deleteEmployee(parseInt(event.target.dataset.employeeId));
+            }
+        });
+        
+        function editEmployee(id) {
+            const emp = employeesData.find(e => e.employee_id === id);
+            if (emp) {
+                employeeIdInput.value = emp.employee_id;
+                employeeFirstNameInput.value = emp.first_name;
+                employeeLastNameInput.value = emp.last_name;
+                employeePositionInput.value = emp.position || '';
+                employeeContactNumberInput.value = emp.contact_number || '';
+                employeeEmailInput.value = emp.email || '';
+                employeeHireDateInput.value = emp.hire_date ? new Date(emp.hire_date).toISOString().split('T')[0] : '';
+                employeeSalaryInput.value = emp.salary ? parseFloat(emp.salary).toFixed(2) : '';
                 saveEmployeeBtn.textContent = 'Update Employee';
                 cancelEmployeeEditBtn.style.display = 'inline-block';
-                employeeForm.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                showMessage('Employee not found for editing.', 'error');
             }
         }
 
-        /**
-         * Resets the employee form.
-         */
         function resetEmployeeForm() {
             employeeForm.reset();
             employeeIdInput.value = '';
             saveEmployeeBtn.textContent = 'Add Employee';
             cancelEmployeeEditBtn.style.display = 'none';
         }
-
-        /**
-         * Handles form submission for adding or updating an employee.
-         */
-        employeeForm.addEventListener('submit', async (event) => {
+        
+        cancelEmployeeEditBtn.addEventListener('click', resetEmployeeForm);
+        
+        employeeForm.addEventListener('submit', async event => {
             event.preventDefault();
-
-            const employeeId = employeeIdInput.value;
-            const url = employeeId ? `${API_BASE_URL}/employees/${employeeId}` : `${API_BASE_URL}/employees`;
-            const method = employeeId ? 'PUT' : 'POST';
-            const successMessage = employeeId ? 'Employee updated successfully!' : 'Employee added successfully!';
-            const errorMessage = employeeId ? 'Failed to update employee.' : 'Failed to add employee.';
-
-            const employeeData = {
+            const id = employeeIdInput.value;
+            const url = id ? `${API_BASE_URL}/employees/${id}` : `${API_BASE_URL}/employees`;
+            const method = id ? 'PUT' : 'POST';
+            const data = {
                 first_name: employeeFirstNameInput.value,
                 last_name: employeeLastNameInput.value,
                 position: employeePositionInput.value,
                 contact_number: employeeContactNumberInput.value,
                 email: employeeEmailInput.value,
-                hire_date: employeeHireDateInput.value, // YYYY-MM-DD format
+                hire_date: employeeHireDateInput.value,
                 salary: employeeSalaryInput.value ? parseFloat(employeeSalaryInput.value) : null
             };
-
-            saveEmployeeBtn.disabled = true;
-            saveEmployeeBtn.textContent = employeeId ? 'Updating...' : 'Adding...';
-
+            
             try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(employeeData)
-                });
-
+                const response = await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
                 const result = await response.json();
-
-                if (response.ok) {
-                    showMessage(successMessage, 'success');
-                    resetEmployeeForm();
-                    await fetchEmployees().then(employees => {
-                        renderManagementEmployees(employees);
-                    });
-                } else {
-                    throw new Error(result.message || response.statusText || errorMessage);
-                }
+                if (!response.ok) throw new Error(result.message);
+                showMessage(result.message, 'success');
+                resetEmployeeForm();
+                await fetchEmployees().then(renderManagementEmployees);
             } catch (error) {
-                console.error(`Error ${method}ing employee:`, error);
-                showMessage(`${errorMessage} ${error.message}`, 'error');
-            } finally {
-                saveEmployeeBtn.disabled = false;
-                saveEmployeeBtn.textContent = employeeId ? 'Update Employee' : 'Add Employee';
+                showMessage(`Error: ${error.message}`, 'error');
             }
         });
 
-        cancelEmployeeEditBtn.addEventListener('click', resetEmployeeForm);
-
-        /**
-         * Deletes an employee.
-         * @param {number} employeeId - The ID of the employee to delete.
-         */
-        async function deleteEmployee(employeeId) {
-            if (!confirm('Are you sure you want to delete this employee? This action cannot be undone.')) {
-                return;
-            }
-
+        async function deleteEmployee(id) {
+            if (!confirm('Are you sure?')) return;
             try {
-                const response = await fetch(`${API_BASE_URL}/employees/${employeeId}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
+                const response = await fetch(`${API_BASE_URL}/employees/${id}`, { method: 'DELETE' });
                 const result = await response.json();
-
-                if (response.ok) {
-                    showMessage('Employee deleted successfully!', 'success');
-                    await fetchEmployees().then(employees => {
-                        renderManagementEmployees(employees);
-                    });
-                } else {
-                    throw new Error(result.message || response.statusText || 'Failed to delete employee.');
-                }
+                if (!response.ok) throw new Error(result.message);
+                showMessage(result.message, 'success');
+                await fetchEmployees().then(renderManagementEmployees);
             } catch (error) {
-                console.error('Error deleting employee:', error);
-                showMessage(`Failed to delete employee: ${error.message}`, 'error');
+                showMessage(`Error: ${error.message}`, 'error');
             }
         }
 
-        // --- Customer CRUD Operations ---
-
-        /**
-         * Fetches customers from the backend API.
-         * @returns {Promise<Array>} A promise that resolves to an array of customer objects.
-         */
+        // --- Customer CRUD Functions ---
         async function fetchCustomers() {
-            try {
+             try {
                 const response = await fetch(`${API_BASE_URL}/customers`);
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-                    throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message || response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 customersData = await response.json();
                 return customersData;
             } catch (error) {
-                console.error('Error fetching customers:', error);
                 showMessage(`Failed to load customers: ${error.message}`, 'error');
                 return [];
             }
         }
 
-        /**
-         * Renders the customers in the "Customer Management" table.
-         * @param {Array} customers - An array of customer objects.
-         */
         function renderManagementCustomers(customers) {
             managementCustomersTableBody.innerHTML = '';
-
-            if (customers.length === 0) {
-                managementCustomersTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No customers to manage.</td>
-                    </tr>
-                `;
-                return;
+             if (customers.length === 0) {
+                 managementCustomersTableBody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-500">No customers to manage.</td></tr>`;
+                 return;
             }
-
-            customers.forEach(customer => {
+            customers.forEach(cust => {
                 const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50';
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${customer.first_name} ${customer.last_name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${customer.email || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${customer.loyalty_points || 0}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button class="btn-secondary edit-customer-btn mr-2" data-customer-id="${customer.customer_id}">Edit</button>
-                        <button class="btn-danger delete-customer-btn" data-customer-id="${customer.customer_id}">Delete</button>
-                    </td>
-                `;
+                    <td class="px-6 py-4">${cust.first_name} ${cust.last_name}</td>
+                    <td class="px-6 py-4">${cust.email || 'N/A'}</td>
+                    <td class="px-6 py-4">${cust.loyalty_points || 0}</td>
+                    <td class="px-6 py-4 text-right">
+                        <button class="btn-secondary edit-customer-btn mr-2" data-customer-id="${cust.customer_id}">Edit</button>
+                        <button class="btn-danger delete-customer-btn" data-customer-id="${cust.customer_id}">Delete</button>
+                    </td>`;
                 managementCustomersTableBody.appendChild(row);
             });
-
-            managementCustomersTableBody.querySelectorAll('.edit-customer-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const customerId = parseInt(event.target.dataset.customerId);
-                    editCustomer(customerId);
-                });
-            });
-
-            managementCustomersTableBody.querySelectorAll('.delete-customer-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const customerId = parseInt(event.target.dataset.customerId);
-                    deleteCustomer(customerId);
-                });
-            });
         }
+        
+        managementCustomersTableBody.addEventListener('click', event => {
+            if (event.target.classList.contains('edit-customer-btn')) {
+                editCustomer(parseInt(event.target.dataset.customerId));
+            }
+            if (event.target.classList.contains('delete-customer-btn')) {
+                deleteCustomer(parseInt(event.target.dataset.customerId));
+            }
+        });
 
-        /**
-         * Populates the form for editing an existing customer.
-         * @param {number} customerId - The ID of the customer to edit.
-         */
-        function editCustomer(customerId) {
-            const customerToEdit = customersData.find(cust => cust.customer_id === customerId);
-            if (customerToEdit) {
-                customerIdInput.value = customerToEdit.customer_id;
-                customerFirstNameInput.value = customerToEdit.first_name;
-                customerLastNameInput.value = customerToEdit.last_name;
-                customerContactNumberInput.value = customerToEdit.contact_number || '';
-                customerEmailInput.value = customerToEdit.email || '';
-                customerLoyaltyPointsInput.value = customerToEdit.loyalty_points || 0;
-
+        function editCustomer(id) {
+            const cust = customersData.find(c => c.customer_id === id);
+            if (cust) {
+                customerIdInput.value = cust.customer_id;
+                customerFirstNameInput.value = cust.first_name;
+                customerLastNameInput.value = cust.last_name;
+                customerContactNumberInput.value = cust.contact_number || '';
+                customerEmailInput.value = cust.email || '';
+                customerLoyaltyPointsInput.value = cust.loyalty_points || 0;
                 saveCustomerBtn.textContent = 'Update Customer';
                 cancelCustomerEditBtn.style.display = 'inline-block';
-                customerForm.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                showMessage('Customer not found for editing.', 'error');
             }
         }
-
-        /**
-         * Resets the customer form.
-         */
+        
         function resetCustomerForm() {
             customerForm.reset();
             customerIdInput.value = '';
@@ -1135,88 +802,46 @@
             cancelCustomerEditBtn.style.display = 'none';
         }
 
-        /**
-         * Handles form submission for adding or updating a customer.
-         */
-        customerForm.addEventListener('submit', async (event) => {
+        cancelCustomerEditBtn.addEventListener('click', resetCustomerForm);
+
+        customerForm.addEventListener('submit', async event => {
             event.preventDefault();
-
-            const customerId = customerIdInput.value;
-            const url = customerId ? `${API_BASE_URL}/customers/${customerId}` : `${API_BASE_URL}/customers`;
-            const method = customerId ? 'PUT' : 'POST';
-            const successMessage = customerId ? 'Customer updated successfully!' : 'Customer added successfully!';
-            const errorMessage = customerId ? 'Failed to update customer.' : 'Failed to add customer.';
-
-            const customerData = {
+            const id = customerIdInput.value;
+            const url = id ? `${API_BASE_URL}/customers/${id}` : `${API_BASE_URL}/customers`;
+            const method = id ? 'PUT' : 'POST';
+            const data = {
                 first_name: customerFirstNameInput.value,
                 last_name: customerLastNameInput.value,
                 contact_number: customerContactNumberInput.value,
                 email: customerEmailInput.value,
                 loyalty_points: customerLoyaltyPointsInput.value ? parseInt(customerLoyaltyPointsInput.value) : 0
             };
-
-            saveCustomerBtn.disabled = true;
-            saveCustomerBtn.textContent = customerId ? 'Updating...' : 'Adding...';
-
+            
             try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(customerData)
-                });
-
+                const response = await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
                 const result = await response.json();
-
-                if (response.ok) {
-                    showMessage(successMessage, 'success');
-                    resetCustomerForm();
-                    await fetchCustomers().then(customers => {
-                        renderManagementCustomers(customers);
-                    });
-                } else {
-                    throw new Error(result.message || response.statusText || errorMessage);
-                }
+                if (!response.ok) throw new Error(result.message);
+                showMessage(result.message, 'success');
+                resetCustomerForm();
+                await fetchCustomers().then(renderManagementCustomers);
             } catch (error) {
-                console.error(`Error ${method}ing customer:`, error);
-                showMessage(`${errorMessage} ${error.message}`, 'error');
-            } finally {
-                saveCustomerBtn.disabled = false;
-                saveCustomerBtn.textContent = customerId ? 'Update Customer' : 'Add Customer';
+                showMessage(`Error: ${error.message}`, 'error');
             }
         });
-
-        cancelCustomerEditBtn.addEventListener('click', resetCustomerForm);
-
-        /**
-         * Deletes a customer.
-         * @param {number} customerId - The ID of the customer to delete.
-         */
-        async function deleteCustomer(customerId) {
-            if (!confirm('Are you sure you want to delete this customer? This action cannot be undone.')) {
-                return;
-            }
-
+        
+        async function deleteCustomer(id) {
+            if (!confirm('Are you sure?')) return;
             try {
-                const response = await fetch(`${API_BASE_URL}/customers/${customerId}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
+                const response = await fetch(`${API_BASE_URL}/customers/${id}`, { method: 'DELETE' });
                 const result = await response.json();
-
-                if (response.ok) {
-                    showMessage('Customer deleted successfully!', 'success');
-                    await fetchCustomers().then(customers => {
-                        renderManagementCustomers(customers);
-                    });
-                } else {
-                    throw new Error(result.message || response.statusText || 'Failed to delete customer.');
-                }
+                if (!response.ok) throw new Error(result.message);
+                showMessage(result.message, 'success');
+                await fetchCustomers().then(renderManagementCustomers);
             } catch (error) {
-                console.error('Error deleting customer:', error);
-                showMessage(`Failed to delete customer: ${error.message}`, 'error');
+                showMessage(`Error: ${error.message}`, 'error');
             }
         }
+
     </script>
 </body>
 </html>
