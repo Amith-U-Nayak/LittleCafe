@@ -9,277 +9,294 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
+            background-color: #f3f4f6;
             color: #333;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }
-        .card {
-            background-color: #ffffff;
-            border-radius: 0.75rem; /* rounded-xl */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        /* Custom Brown Palette */
+        .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+        .card { background-color: #ffffff; border-radius: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 1.5rem; margin-bottom: 1.5rem; }
         .bg-cafe-primary { background-color: #8B4513; }
         .bg-cafe-dark { background-color: #5C4033; }
         .text-cafe-accent { color: #A0522D; }
         .hover-text-cafe-light:hover { color: #D2B48C; }
         .focus-border-cafe-accent:focus { border-color: #A0522D; }
-        .focus-ring-cafe-accent:focus {
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-            box-shadow: inset 0 0 0px 2px #A0522D;
-        }
+        .focus-ring-cafe-accent:focus { outline: 2px solid transparent; outline-offset: 2px; box-shadow: inset 0 0 0px 2px #A0522D; }
         .text-cafe-checkbox { color: #A0522D; }
-
-        .btn-primary {
-            background-color: #8B4513;
-            color: #ffffff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease-in-out;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+        .btn-primary { background-color: #8B4513; color: #ffffff; padding: 0.75rem 1.5rem; border-radius: 0.5rem; transition: background-color 0.2s ease-in-out; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
         .btn-primary:hover { background-color: #5C4033; }
-        .btn-secondary {
-            background-color: #e5e7eb;
-            color: #4b5563;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease-in-out;
-        }
+        .btn-secondary { background-color: #e5e7eb; color: #4b5563; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: background-color 0.2s ease-in-out; }
         .btn-secondary:hover { background-color: #d1d5db; }
-        .btn-danger {
-            background-color: #dc2626;
-            color: #ffffff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease-in-out;
-        }
+        .btn-danger { background-color: #dc2626; color: #ffffff; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: background-color 0.2s ease-in-out; }
         .btn-danger:hover { background-color: #b91c1c; }
-        .btn-info {
-            background-color: #3b82f6;
-            color: #ffffff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease-in-out;
-        }
-        .btn-info:hover { background-color: #2563eb; }
-
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: none;
-            text-align: center;
-            font-weight: 500;
-        }
+        .message-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #4CAF50; color: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; display: none; text-align: center; font-weight: 500; }
         .message-box.error { background-color: #f44336; }
         .hidden { display: none; }
+        #login-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: #e5e7eb; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-    <div class="bg-yellow-200 p-2 text-center text-sm text-yellow-800">
-        <strong>Demonstration Mode:</strong>
-        <button id="switchToUserBtn" class="font-bold underline hidden">Switch to User View</button>
-        <button id="switchToAdminBtn" class="font-bold underline">Switch to Admin View</button>
-        <span id="currentRoleText" class="ml-2 bg-gray-600 text-white text-xs font-bold mr-2 px-2.5 py-0.5 rounded-full">Current View: User</span>
+<body class="min-h-screen">
+
+    <div id="login-container">
+        <div class="w-full max-w-md">
+            <form id="loginForm" class="bg-white shadow-lg rounded-xl px-8 pt-6 pb-8 mb-4">
+                <div class="mb-6 text-center">
+                    <h1 class="text-3xl font-bold text-gray-800">LITTLE CAFE</h1>
+                    <p class="text-gray-600">Please sign in to continue</p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus-border-cafe-accent focus-ring-cafe-accent" id="username" type="text" placeholder="Username" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus-border-cafe-accent focus-ring-cafe-accent" id="password" type="password" placeholder="******************" required>
+                </div>
+                 <p id="loginError" class="text-red-500 text-xs italic mb-4 hidden"></p>
+                <div class="flex items-center justify-between">
+                    <button class="btn-primary font-bold w-full" type="submit">Sign In</button>
+                </div>
+                 <div class="text-center mt-4 text-sm text-gray-500">
+                    <p>Admin: `admin` / `adminpass`</p>
+                    <p>User: `user` / `userpass`</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="app-container" class="min-h-screen flex flex-col hidden">
+        <header class="bg-cafe-primary text-white p-6 shadow-md">
+            <div class="container flex justify-between items-center">
+                <h1 class="text-3xl font-bold">LITTLE CAFE</h1>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="#" data-section="menu" class="nav-link hover-text-cafe-light transition duration-200">Menu</a></li>
+                        <li><a href="#" data-section="order" class="nav-link hover-text-cafe-light transition duration-200">Order</a></li>
+                        <li data-admin-only="true"><a href="#" data-section="menu-management" class="nav-link hover-text-cafe-light transition duration-200">Menu Management</a></li>
+                        <li data-admin-only="true"><a href="#" data-section="employee-management" class="nav-link hover-text-cafe-light transition duration-200">Employee Management</a></li>
+                        <li data-admin-only="true"><a href="#" data-section="customer-management" class="nav-link hover-text-cafe-light transition duration-200">Customer Management</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="flex-grow container py-8">
+            <div id="messageBox" class="message-box"></div>
+
+            <section id="menu" class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Our Menu</h2>
+                <div id="menuItemsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card flex flex-col items-center justify-center p-6 bg-gray-100 text-gray-600">
+                        <p>Loading menu items...</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="order" class="mb-12 hidden">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Your Order</h2>
+                <div class="card">
+                    <div id="orderList" class="mb-4">
+                        <p class="text-gray-600">No items in your order yet.</p>
+                    </div>
+                    <div class="flex justify-between items-center mb-6 border-t pt-4 mt-4">
+                        <span class="text-xl font-bold text-gray-800">Total:</span>
+                        <span id="orderTotal" class="text-xl font-bold text-cafe-accent">$0.00</span>
+                    </div>
+                    <button id="placeOrderBtn" class="btn-primary w-full text-lg font-medium">Place Order</button>
+                </div>
+            </section>
+
+            <section id="menu-management" class="mb-12 hidden" data-admin-only="true">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Menu Management</h2>
+                <div class="card mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Menu Item</h3>
+                    <form id="menuItemForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="hidden" id="menuItemId">
+                        <div>
+                            <label for="itemName" class="block text-sm font-medium text-gray-700">Item Name</label>
+                            <input type="text" id="itemName" name="item_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
+                        </div>
+                        <div>
+                            <label for="itemPrice" class="block text-sm font-medium text-gray-700">Price</label>
+                            <input type="number" id="itemPrice" name="price" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="itemDescription" class="block text-sm font-medium text-gray-700">Description</label>
+                            <textarea id="itemDescription" name="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></textarea>
+                        </div>
+                        <div>
+                            <label for="itemCategory" class="block text-sm font-medium text-gray-700">Category</label>
+                            <input type="text" id="itemCategory" name="category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="itemAvailable" name="is_available" class="h-4 w-4 text-cafe-checkbox focus-ring-cafe-accent border-gray-300 rounded">
+                            <label for="itemAvailable" class="ml-2 block text-sm text-gray-900">Available</label>
+                        </div>
+                        <div class="md:col-span-2 flex justify-end space-x-3">
+                            <button type="submit" class="btn-primary" id="saveMenuItemBtn">Add Item</button>
+                            <button type="button" class="btn-secondary" id="cancelEditBtn" style="display: none;">Cancel Edit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Menu Items (Manage)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Available</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="managementMenuItemsTableBody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Loading menu items for management...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="employee-management" class="mb-12 hidden" data-admin-only="true">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Employee Management</h2>
+                <div class="card mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Employee</h3>
+                    <form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="hidden" id="employeeId">
+                        <div>
+                            <label for="employeeFirstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="employeeFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
+                        </div>
+                        <div>
+                            <label for="employeeLastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="employeeLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
+                        </div>
+                        <div>
+                            <label for="employeePosition" class="block text-sm font-medium text-gray-700">Position</label>
+                            <input type="text" id="employeePosition" name="position" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div>
+                            <label for="employeeContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                            <input type="text" id="employeeContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div>
+                            <label for="employeeEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="employeeEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div>
+                            <label for="employeeHireDate" class="block text-sm font-medium text-gray-700">Hire Date</label>
+                            <input type="date" id="employeeHireDate" name="hire_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div>
+                            <label for="employeeSalary" class="block text-sm font-medium text-gray-700">Salary</label>
+                            <input type="number" id="employeeSalary" name="salary" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div class="md:col-span-2 flex justify-end space-x-3">
+                            <button type="submit" class="btn-primary" id="saveEmployeeBtn">Add Employee</button>
+                            <button type="button" class="btn-secondary" id="cancelEmployeeEditBtn" style="display: none;">Cancel Edit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Employees (Manage)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="managementEmployeesTableBody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Loading employees for management...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="customer-management" class="mb-12 hidden" data-admin-only="true">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Customer Management</h2>
+                <div class="card mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Customer</h3>
+                    <form id="customerForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="hidden" id="customerId">
+                        <div>
+                            <label for="customerFirstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="customerFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
+                        </div>
+                        <div>
+                            <label for="customerLastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="customerLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
+                        </div>
+                        <div>
+                            <label for="customerContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                            <input type="text" id="customerContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div>
+                            <label for="customerEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="customerEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div>
+                            <label for="customerLoyaltyPoints" class="block text-sm font-medium text-gray-700">Loyalty Points</label>
+                            <input type="number" id="customerLoyaltyPoints" name="loyalty_points" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
+                        </div>
+                        <div class="md:col-span-2 flex justify-end space-x-3">
+                            <button type="submit" class="btn-primary" id="saveCustomerBtn">Add Customer</button>
+                            <button type="button" class="btn-secondary" id="cancelCustomerEditBtn" style="display: none;">Cancel Edit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Customers (Manage)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loyalty Points</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="managementCustomersTableBody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Loading customers for management...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-gray-800 text-white p-6 text-center shadow-inner">
+            <div class="container">
+                <p>&copy; 2024 Cafe Management System. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 
-    <header class="bg-cafe-primary text-white p-6 shadow-md">
-        <div class="container flex justify-between items-center">
-            <h1 class="text-3xl font-bold">LITTLE CAFE</h1>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="#" data-section="menu" class="nav-link hover-text-cafe-light transition duration-200">Menu</a></li>
-                    <li><a href="#" data-section="order" class="nav-link hover-text-cafe-light transition duration-200">Order</a></li>
-                    <li data-admin-only="true"><a href="#" data-section="menu-management" class="nav-link hover-text-cafe-light transition duration-200">Menu Management</a></li>
-                    <li data-admin-only="true"><a href="#" data-section="employee-management" class="nav-link hover-text-cafe-light transition duration-200">Employee Management</a></li>
-                    <li data-admin-only="true"><a href="#" data-section="customer-management" class="nav-link hover-text-cafe-light transition duration-200">Customer Management</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main class="flex-grow container py-8">
-        <div id="messageBox" class="message-box"></div>
-
-        <section id="menu" class="mb-12">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Our Menu</h2>
-            <div id="menuItemsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
-        </section>
-
-        <section id="order" class="mb-12 hidden">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Your Order</h2>
-            <div class="card">
-                <div id="orderList" class="mb-4"><p class="text-gray-600">No items in your order yet.</p></div>
-                <div class="flex justify-between items-center mb-6 border-t pt-4 mt-4">
-                    <span class="text-xl font-bold text-gray-800">Total:</span>
-                    <span id="orderTotal" class="text-xl font-bold text-cafe-accent">$0.00</span>
-                </div>
-                <button id="placeOrderBtn" class="btn-primary w-full text-lg font-medium">Place Order</button>
-            </div>
-        </section>
-
-        <section id="menu-management" class="mb-12 hidden" data-admin-only="true">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Menu Management</h2>
-            <div class="card mb-8">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Menu Item</h3>
-                <form id="menuItemForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="hidden" id="menuItemId">
-                    <div>
-                        <label for="itemName" class="block text-sm font-medium text-gray-700">Item Name</label>
-                        <input type="text" id="itemName" name="item_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
-                    </div>
-                    <div>
-                        <label for="itemPrice" class="block text-sm font-medium text-gray-700">Price</label>
-                        <input type="number" id="itemPrice" name="price" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="itemDescription" class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea id="itemDescription" name="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></textarea>
-                    </div>
-                    <div>
-                        <label for="itemCategory" class="block text-sm font-medium text-gray-700">Category</label>
-                        <input type="text" id="itemCategory" name="category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2">
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" id="itemAvailable" name="is_available" class="h-4 w-4 text-cafe-checkbox focus-ring-cafe-accent border-gray-300 rounded">
-                        <label for="itemAvailable" class="ml-2 block text-sm text-gray-900">Available</label>
-                    </div>
-                    <div class="md:col-span-2 flex justify-end space-x-3">
-                        <button type="submit" class="btn-primary" id="saveMenuItemBtn">Add Item</button>
-                        <button type="button" class="btn-secondary" id="cancelEditBtn" style="display: none;">Cancel Edit</button>
-                    </div>
-                </form>
-            </div>
-            <div class="card">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Menu Items (Manage)</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Available</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th></tr></thead>
-                        <tbody id="managementMenuItemsTableBody" class="bg-white divide-y divide-gray-200"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section id="employee-management" class="mb-12 hidden" data-admin-only="true">
-             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Employee Management</h2>
-            <div class="card mb-8">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Employee</h3>
-                <form id="employeeForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="hidden" id="employeeId">
-                    <div><label for="employeeFirstName" class="block text-sm font-medium text-gray-700">First Name</label><input type="text" id="employeeFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
-                    <div><label for="employeeLastName" class="block text-sm font-medium text-gray-700">Last Name</label><input type="text" id="employeeLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
-                    <div><label for="employeePosition" class="block text-sm font-medium text-gray-700">Position</label><input type="text" id="employeePosition" name="position" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div><label for="employeeContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label><input type="text" id="employeeContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div><label for="employeeEmail" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="employeeEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div><label for="employeeHireDate" class="block text-sm font-medium text-gray-700">Hire Date</label><input type="date" id="employeeHireDate" name="hire_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div><label for="employeeSalary" class="block text-sm font-medium text-gray-700">Salary</label><input type="number" id="employeeSalary" name="salary" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div class="md:col-span-2 flex justify-end space-x-3"><button type="submit" class="btn-primary" id="saveEmployeeBtn">Add Employee</button><button type="button" class="btn-secondary" id="cancelEmployeeEditBtn" style="display: none;">Cancel Edit</button></div>
-                </form>
-            </div>
-            <div class="card">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Employees (Manage)</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th></tr></thead>
-                        <tbody id="managementEmployeesTableBody" class="bg-white divide-y divide-gray-200"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section id="customer-management" class="mb-12 hidden" data-admin-only="true">
-             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Customer Management</h2>
-            <div class="card mb-8">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Add/Edit Customer</h3>
-                <form id="customerForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="hidden" id="customerId">
-                    <div><label for="customerFirstName" class="block text-sm font-medium text-gray-700">First Name</label><input type="text" id="customerFirstName" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
-                    <div><label for="customerLastName" class="block text-sm font-medium text-gray-700">Last Name</label><input type="text" id="customerLastName" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2" required></div>
-                    <div><label for="customerContactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label><input type="text" id="customerContactNumber" name="contact_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div><label for="customerEmail" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="customerEmail" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div><label for="customerLoyaltyPoints" class="block text-sm font-medium text-gray-700">Loyalty Points</label><input type="number" id="customerLoyaltyPoints" name="loyalty_points" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-border-cafe-accent focus-ring-cafe-accent sm:text-sm p-2"></div>
-                    <div class="md:col-span-2 flex justify-end space-x-3"><button type="submit" class="btn-primary" id="saveCustomerBtn">Add Customer</button><button type="button" class="btn-secondary" id="cancelCustomerEditBtn" style="display: none;">Cancel Edit</button></div>
-                </form>
-            </div>
-            <div class="card">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Current Customers (Manage)</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loyalty Points</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th></tr></thead>
-                        <tbody id="managementCustomersTableBody" class="bg-white divide-y divide-gray-200"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-gray-800 text-white p-6 text-center shadow-inner">
-        <div class="container">
-            <p>&copy; 2024 Cafe Management System. All rights reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        // --- START OF NEW ROLE-BASED LOGIC ---
-        let currentUserRole = 'user'; // 'user' or 'admin'
+        // --- Role & State Management ---
+        let currentUserRole = 'user';
 
-        const switchToUserBtn = document.getElementById('switchToUserBtn');
-        const switchToAdminBtn = document.getElementById('switchToAdminBtn');
-        const currentRoleText = document.getElementById('currentRoleText');
+        // --- DOM References ---
+        const loginContainer = document.getElementById('login-container');
+        const appContainer = document.getElementById('app-container');
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginError = document.getElementById('loginError');
         const adminOnlyNavLinks = document.querySelectorAll('nav li[data-admin-only="true"]');
-
-        function updateUIForRole() {
-            // Update navigation links
-            adminOnlyNavLinks.forEach(link => {
-                link.style.display = (currentUserRole === 'admin') ? 'list-item' : 'none';
-            });
-
-            // Update role switcher button visibility
-            switchToUserBtn.classList.toggle('hidden', currentUserRole === 'user');
-            switchToAdminBtn.classList.toggle('hidden', currentUserRole === 'admin');
-            
-            // Update role text
-            currentRoleText.textContent = `Current View: ${currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1)}`;
-
-            // If current view is an admin page and we switch to user, redirect to menu
-            const activeSection = document.querySelector('main section:not(.hidden)');
-            if (currentUserRole === 'user' && activeSection && activeSection.dataset.adminOnly === 'true') {
-                showSection('menu');
-            }
-        }
-
-        switchToUserBtn.addEventListener('click', () => {
-            currentUserRole = 'user';
-            updateUIForRole();
-            showSection('menu'); // Default page for users
-        });
-
-        switchToAdminBtn.addEventListener('click', () => {
-            currentUserRole = 'admin';
-            updateUIForRole();
-            showSection('menu-management'); // Default page for admins
-        });
-        // --- END OF NEW ROLE-BASED LOGIC ---
-        
-        // DOM Element References (existing)
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('main section');
         const menuItemsContainer = document.getElementById('menuItemsContainer');
         const orderList = document.getElementById('orderList');
         const orderTotalSpan = document.getElementById('orderTotal');
@@ -317,49 +334,56 @@
         const saveCustomerBtn = document.getElementById('saveCustomerBtn');
         const cancelCustomerEditBtn = document.getElementById('cancelCustomerEditBtn');
         const managementCustomersTableBody = document.getElementById('managementCustomersTableBody');
-
-        // Global State (existing)
         let currentOrder = [];
         let menuData = [];
         let employeesData = [];
         let customersData = [];
-
-        // Base URL (existing)
         const API_BASE_URL = 'http://localhost:3000/api';
 
-        // showMessage function (existing)
-        function showMessage(message, type = 'success', duration = 3000) {
-            messageBox.textContent = message;
-            messageBox.className = 'message-box';
-            if (type === 'error') {
-                messageBox.classList.add('error');
+        // --- Login Logic ---
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+            loginError.classList.add('hidden');
+
+            if (username === 'admin' && password === 'adminpass') {
+                currentUserRole = 'admin';
+                initializeApp();
+            } else if (username === 'user' && password === 'userpass') {
+                currentUserRole = 'user';
+                initializeApp();
+            } else {
+                loginError.textContent = 'Invalid username or password.';
+                loginError.classList.remove('hidden');
             }
-            messageBox.style.display = 'block';
-            setTimeout(() => {
-                messageBox.style.display = 'none';
-            }, duration);
+        });
+        
+        function initializeApp() {
+            loginContainer.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+            updateUIForRole();
+            const defaultSection = currentUserRole === 'admin' ? 'menu-management' : 'menu';
+            showSection(defaultSection);
         }
 
-        // --- SPA Navigation Logic (MODIFIED) ---
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('main section');
+        // --- UI and Navigation Logic ---
+        function updateUIForRole() {
+            adminOnlyNavLinks.forEach(link => {
+                link.style.display = (currentUserRole === 'admin') ? 'list-item' : 'none';
+            });
+        }
 
         function showSection(sectionId) {
             const targetSection = document.getElementById(sectionId);
-
-            // **SECURITY CHECK**: Prevent users from accessing admin pages
+            if (!targetSection) return;
             if (targetSection.dataset.adminOnly === 'true' && currentUserRole !== 'admin') {
-                showMessage('Access denied. Please switch to Admin view.', 'error');
-                showSection('menu'); // Redirect to a safe page
+                showSection('menu');
                 return;
             }
-
-            sections.forEach(section => {
-                section.classList.add('hidden');
-            });
+            sections.forEach(section => section.classList.add('hidden'));
             targetSection.classList.remove('hidden');
 
-            // Data fetching logic (existing)
             if (sectionId === 'menu') { fetchMenuItems().then(renderMenu); } 
             else if (sectionId === 'order') { renderOrder(); } 
             else if (sectionId === 'menu-management') { fetchMenuItems().then(renderManagementMenu); resetMenuItemForm(); }
@@ -376,21 +400,17 @@
                 showSection(sectionId);
             });
         });
-
-        // Handle initial load
-        document.addEventListener('DOMContentLoaded', () => {
-            updateUIForRole(); // Set the initial UI based on the default role
-            const initialSection = window.location.hash ? window.location.hash.substring(1) : 'menu';
-            const validSections = Array.from(document.querySelectorAll('section')).map(s => s.id);
-            if(validSections.includes(initialSection)){
-                showSection(initialSection);
-            } else {
-                showSection('menu');
-            }
-        });
-
-        // --- ALL CRUD AND ORDER FUNCTIONS (UNCHANGED) ---
         
+        // --- Utility and Helper Functions ---
+        function showMessage(message, type = 'success', duration = 3000) {
+            messageBox.textContent = message;
+            messageBox.className = 'message-box';
+            if (type === 'error') messageBox.classList.add('error');
+            messageBox.style.display = 'block';
+            setTimeout(() => { messageBox.style.display = 'none'; }, duration);
+        }
+
+        // --- Menu Item CRUD Operations ---
         async function fetchMenuItems() {
             try {
                 const response = await fetch(`${API_BASE_URL}/menu_items`);
@@ -398,12 +418,10 @@
                 menuData = await response.json();
                 return menuData;
             } catch (error) {
-                console.error('Error fetching menu items:', error);
-                showMessage(`Failed to load menu items: ${error.message}`, 'error');
+                showMessage(`Failed to load menu: ${error.message}`, 'error');
                 return [];
             }
         }
-
         function renderMenu(items) {
             menuItemsContainer.innerHTML = '';
             const availableItems = items.filter(item => item.is_available);
@@ -414,57 +432,30 @@
             availableItems.forEach(item => {
                 const menuItemDiv = document.createElement('div');
                 menuItemDiv.className = 'card flex flex-col justify-between';
-                menuItemDiv.innerHTML = `
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">${item.item_name}</h3>
-                        <p class="text-gray-600 text-sm mb-3">${item.description || 'No description'}</p>
-                        <p class="text-lg font-bold text-cafe-accent mb-4">$${parseFloat(item.price).toFixed(2)}</p>
-                    </div>
-                    <button class="btn-primary self-end add-to-order-btn" data-item-id="${item.item_id}" data-item-name="${item.item_name}" data-item-price="${item.price}">
-                        Add to Order
-                    </button>`;
+                menuItemDiv.innerHTML = `<div><h3 class="text-xl font-semibold mb-2">${item.item_name}</h3><p class="text-gray-600 text-sm mb-3">${item.description || ''}</p><p class="text-lg font-bold text-cafe-accent mb-4">$${parseFloat(item.price).toFixed(2)}</p></div><button class="btn-primary self-end add-to-order-btn" data-item-id="${item.item_id}" data-item-name="${item.item_name}" data-item-price="${item.price}">Add to Order</button>`;
                 menuItemsContainer.appendChild(menuItemDiv);
             });
         }
-        
         menuItemsContainer.addEventListener('click', (event) => {
             const button = event.target.closest('.add-to-order-btn');
-            if (button) {
-                addToOrder(parseInt(button.dataset.itemId), button.dataset.itemName, parseFloat(button.dataset.itemPrice));
-            }
+            if (button) addToOrder(parseInt(button.dataset.itemId), button.dataset.itemName, parseFloat(button.dataset.itemPrice));
         });
-
         function renderManagementMenu(items) {
             managementMenuItemsTableBody.innerHTML = '';
             if (items.length === 0) {
-                managementMenuItemsTableBody.innerHTML = `<tr><td colspan="5" class="text-center p-4 text-gray-500">No menu items to manage.</td></tr>`;
+                managementMenuItemsTableBody.innerHTML = `<tr><td colspan="5" class="text-center p-4 text-gray-500">No menu items.</td></tr>`;
                 return;
             }
             items.forEach(item => {
                 const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50';
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.item_name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$${parseFloat(item.price).toFixed(2)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.category || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.is_available ? 'Yes' : 'No'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button class="btn-secondary edit-menu-item-btn mr-2" data-item-id="${item.item_id}">Edit</button>
-                        <button class="btn-danger delete-menu-item-btn" data-item-id="${item.item_id}">Delete</button>
-                    </td>`;
+                row.innerHTML = `<td class="px-6 py-4">${item.item_name}</td><td class="px-6 py-4">$${parseFloat(item.price).toFixed(2)}</td><td class="px-6 py-4">${item.category||'N/A'}</td><td class="px-6 py-4">${item.is_available?'Yes':'No'}</td><td class="px-6 py-4 text-right"><button class="btn-secondary edit-menu-item-btn mr-2" data-item-id="${item.item_id}">Edit</button><button class="btn-danger delete-menu-item-btn" data-item-id="${item.item_id}">Delete</button></td>`;
                 managementMenuItemsTableBody.appendChild(row);
             });
         }
-        
         managementMenuItemsTableBody.addEventListener('click', event => {
-            if (event.target.classList.contains('edit-menu-item-btn')) {
-                editMenuItem(parseInt(event.target.dataset.itemId));
-            }
-            if (event.target.classList.contains('delete-menu-item-btn')) {
-                deleteMenuItem(parseInt(event.target.dataset.itemId));
-            }
+            if (event.target.classList.contains('edit-menu-item-btn')) editMenuItem(parseInt(event.target.dataset.itemId));
+            if (event.target.classList.contains('delete-menu-item-btn')) deleteMenuItem(parseInt(event.target.dataset.itemId));
         });
-
         function editMenuItem(itemId) {
             const item = menuData.find(i => i.item_id === itemId);
             if (item) {
@@ -476,204 +467,131 @@
                 itemAvailableInput.checked = item.is_available;
                 saveMenuItemBtn.textContent = 'Update Item';
                 cancelEditBtn.style.display = 'inline-block';
-                menuItemForm.scrollIntoView({ behavior: 'smooth' });
             }
         }
-
         function resetMenuItemForm() {
             menuItemForm.reset();
             menuItemIdInput.value = '';
             saveMenuItemBtn.textContent = 'Add Item';
             cancelEditBtn.style.display = 'none';
         }
-
         menuItemForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const itemId = menuItemIdInput.value;
             const url = itemId ? `${API_BASE_URL}/menu_items/${itemId}` : `${API_BASE_URL}/menu_items`;
             const method = itemId ? 'PUT' : 'POST';
-            const itemData = {
-                item_name: itemNameInput.value,
-                description: itemDescriptionInput.value,
-                price: parseFloat(itemPriceInput.value),
-                category: itemCategoryInput.value,
-                is_available: itemAvailableInput.checked
-            };
-            saveMenuItemBtn.disabled = true;
+            const itemData = { item_name: itemNameInput.value, description: itemDescriptionInput.value, price: parseFloat(itemPriceInput.value), category: itemCategoryInput.value, is_available: itemAvailableInput.checked };
             try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(itemData)
-                });
+                const response = await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(itemData) });
                 const result = await response.json();
-                if (!response.ok) throw new Error(result.message || 'Request failed');
+                if (!response.ok) throw new Error(result.message);
                 showMessage(result.message || 'Success!', 'success');
                 resetMenuItemForm();
                 await fetchMenuItems().then(renderManagementMenu);
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            } finally {
-                saveMenuItemBtn.disabled = false;
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); }
         });
-        
         cancelEditBtn.addEventListener('click', resetMenuItemForm);
-
         async function deleteMenuItem(itemId) {
-            if (!confirm('Are you sure you want to delete this menu item?')) return;
+            if (!confirm('Are you sure?')) return;
             try {
                 const response = await fetch(`${API_BASE_URL}/menu_items/${itemId}`, { method: 'DELETE' });
                 const result = await response.json();
-                if (!response.ok) throw new Error(result.message || 'Failed to delete');
+                if (!response.ok) throw new Error(result.message);
                 showMessage(result.message, 'success');
                 await fetchMenuItems().then(renderManagementMenu);
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); }
         }
-        
+
+        // --- Order Operations ---
         function addToOrder(itemId, itemName, itemPrice) {
             const existingItem = currentOrder.find(item => item.item_id === itemId);
-            if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                currentOrder.push({ item_id: itemId, item_name: itemName, price: itemPrice, quantity: 1 });
-            }
+            if (existingItem) existingItem.quantity++;
+            else currentOrder.push({ item_id: itemId, item_name: itemName, price: itemPrice, quantity: 1 });
             renderOrder();
             showMessage(`${itemName} added to order!`, 'success', 1500);
         }
-
         function removeFromOrder(itemId) {
             currentOrder = currentOrder.filter(item => item.item_id !== itemId);
             renderOrder();
         }
-
         function updateOrderQuantity(itemId, change) {
             const item = currentOrder.find(i => i.item_id === itemId);
             if (item) {
                 item.quantity += change;
-                if (item.quantity <= 0) {
-                    removeFromOrder(itemId);
-                } else {
-                    renderOrder();
-                }
+                if (item.quantity <= 0) removeFromOrder(itemId);
+                else renderOrder();
             }
         }
-
         function renderOrder() {
             orderList.innerHTML = '';
             let total = 0;
             placeOrderBtn.disabled = currentOrder.length === 0;
             placeOrderBtn.classList.toggle('opacity-50', currentOrder.length === 0);
-            placeOrderBtn.classList.toggle('cursor-not-allowed', currentOrder.length === 0);
-
             if (currentOrder.length === 0) {
-                orderList.innerHTML = '<p class="text-gray-600">No items in your order yet.</p>';
+                orderList.innerHTML = '<p class="text-gray-600">No items in your order.</p>';
                 orderTotalSpan.textContent = '$0.00';
                 return;
             }
-
             currentOrder.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
-                const orderItemDiv = document.createElement('div');
-                orderItemDiv.className = 'flex justify-between items-center py-2 border-b';
-                orderItemDiv.innerHTML = `
-                    <div class="flex-grow">
-                        <span class="font-medium">${item.item_name}</span>
-                        <span class="text-gray-500 text-sm ml-2">($${parseFloat(item.price).toFixed(2)} each)</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <button class="btn-secondary px-2 py-1 text-sm minus-btn" data-item-id="${item.item_id}">-</button>
-                        <span>${item.quantity}</span>
-                        <button class="btn-secondary px-2 py-1 text-sm plus-btn" data-item-id="${item.item_id}">+</button>
-                        <span class="font-bold w-20 text-right">$${itemTotal.toFixed(2)}</span>
-                        <button class="btn-secondary px-2 py-1 text-sm remove-btn" data-item-id="${item.item_id}">Remove</button>
-                    </div>`;
-                orderList.appendChild(orderItemDiv);
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center py-2 border-b';
+                div.innerHTML = `<div class="flex-grow"><span>${item.item_name}</span></div><div class="flex items-center space-x-2"><button class="btn-secondary px-2 py-1 text-sm minus-btn" data-item-id="${item.item_id}">-</button><span>${item.quantity}</span><button class="btn-secondary px-2 py-1 text-sm plus-btn" data-item-id="${item.item_id}">+</button><span class="font-bold w-20 text-right">$${itemTotal.toFixed(2)}</span><button class="btn-secondary px-2 py-1 text-sm remove-btn" data-item-id="${item.item_id}">Remove</button></div>`;
+                orderList.appendChild(div);
             });
             orderTotalSpan.textContent = `$${total.toFixed(2)}`;
         }
-        
         orderList.addEventListener('click', event => {
             const itemId = parseInt(event.target.dataset.itemId);
             if (event.target.classList.contains('minus-btn')) updateOrderQuantity(itemId, -1);
             if (event.target.classList.contains('plus-btn')) updateOrderQuantity(itemId, 1);
             if (event.target.classList.contains('remove-btn')) removeFromOrder(itemId);
         });
-
         placeOrderBtn.addEventListener('click', async () => {
              if (currentOrder.length === 0) return;
              placeOrderBtn.disabled = true;
-             placeOrderBtn.textContent = 'Placing Order...';
+             placeOrderBtn.textContent = 'Placing...';
              try {
-                 const orderData = {
-                     employee_id: 1, // Placeholder
-                     customer_id: 1, // Placeholder
-                     items: currentOrder.map(item => ({ item_id: item.item_id, quantity: item.quantity })),
-                     payment_method: 'Card' // Placeholder
-                 };
-                 const response = await fetch(`${API_BASE_URL}/orders`, {
-                     method: 'POST',
-                     headers: { 'Content-Type': 'application/json' },
-                     body: JSON.stringify(orderData)
-                 });
+                 const orderData = { employee_id: 1, customer_id: 1, items: currentOrder.map(item => ({ item_id: item.item_id, quantity: item.quantity })), payment_method: 'Card' };
+                 const response = await fetch(`${API_BASE_URL}/orders`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData) });
                  const result = await response.json();
-                 if (!response.ok) throw new Error(result.message || 'Failed to place order.');
-                 showMessage(`Order ${result.order_id} placed! Total: $${result.total_amount.toFixed(2)}`, 'success');
+                 if (!response.ok) throw new Error(result.message);
+                 showMessage(`Order ${result.order_id} placed!`, 'success');
                  currentOrder = [];
                  renderOrder();
-             } catch (error) {
-                 showMessage(`Error placing order: ${error.message}`, 'error');
+             } catch (error) { showMessage(`Error: ${error.message}`, 'error');
              } finally {
                  placeOrderBtn.disabled = false;
                  placeOrderBtn.textContent = 'Place Order';
              }
         });
-        
-        // --- Employee CRUD Functions ---
+
+        // --- Employee CRUD Operations ---
         async function fetchEmployees() {
             try {
                 const response = await fetch(`${API_BASE_URL}/employees`);
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                if (!response.ok) throw new Error('Failed to fetch');
                 employeesData = await response.json();
                 return employeesData;
-            } catch (error) {
-                showMessage(`Failed to load employees: ${error.message}`, 'error');
-                return [];
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); return []; }
         }
-        
         function renderManagementEmployees(employees) {
             managementEmployeesTableBody.innerHTML = '';
             if (employees.length === 0) {
-                 managementEmployeesTableBody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-500">No employees to manage.</td></tr>`;
-                 return;
+                managementEmployeesTableBody.innerHTML = `<tr><td colspan="4" class="text-center p-4">No employees.</td></tr>`;
+                return;
             }
             employees.forEach(emp => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="px-6 py-4">${emp.first_name} ${emp.last_name}</td>
-                    <td class="px-6 py-4">${emp.position || 'N/A'}</td>
-                    <td class="px-6 py-4">${emp.email || 'N/A'}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="btn-secondary edit-employee-btn mr-2" data-employee-id="${emp.employee_id}">Edit</button>
-                        <button class="btn-danger delete-employee-btn" data-employee-id="${emp.employee_id}">Delete</button>
-                    </td>`;
+                row.innerHTML = `<td class="px-6 py-4">${emp.first_name} ${emp.last_name}</td><td class="px-6 py-4">${emp.position||'N/A'}</td><td class="px-6 py-4">${emp.email||'N/A'}</td><td class="px-6 py-4 text-right"><button class="btn-secondary edit-employee-btn mr-2" data-employee-id="${emp.employee_id}">Edit</button><button class="btn-danger delete-employee-btn" data-employee-id="${emp.employee_id}">Delete</button></td>`;
                 managementEmployeesTableBody.appendChild(row);
             });
         }
-
         managementEmployeesTableBody.addEventListener('click', event => {
-            if (event.target.classList.contains('edit-employee-btn')) {
-                editEmployee(parseInt(event.target.dataset.employeeId));
-            }
-            if (event.target.classList.contains('delete-employee-btn')) {
-                deleteEmployee(parseInt(event.target.dataset.employeeId));
-            }
+            if (event.target.classList.contains('edit-employee-btn')) editEmployee(parseInt(event.target.dataset.employeeId));
+            if (event.target.classList.contains('delete-employee-btn')) deleteEmployee(parseInt(event.target.dataset.employeeId));
         });
-        
         function editEmployee(id) {
             const emp = employeesData.find(e => e.employee_id === id);
             if (emp) {
@@ -689,31 +607,19 @@
                 cancelEmployeeEditBtn.style.display = 'inline-block';
             }
         }
-
         function resetEmployeeForm() {
             employeeForm.reset();
             employeeIdInput.value = '';
             saveEmployeeBtn.textContent = 'Add Employee';
             cancelEmployeeEditBtn.style.display = 'none';
         }
-        
         cancelEmployeeEditBtn.addEventListener('click', resetEmployeeForm);
-        
         employeeForm.addEventListener('submit', async event => {
             event.preventDefault();
             const id = employeeIdInput.value;
             const url = id ? `${API_BASE_URL}/employees/${id}` : `${API_BASE_URL}/employees`;
             const method = id ? 'PUT' : 'POST';
-            const data = {
-                first_name: employeeFirstNameInput.value,
-                last_name: employeeLastNameInput.value,
-                position: employeePositionInput.value,
-                contact_number: employeeContactNumberInput.value,
-                email: employeeEmailInput.value,
-                hire_date: employeeHireDateInput.value,
-                salary: employeeSalaryInput.value ? parseFloat(employeeSalaryInput.value) : null
-            };
-            
+            const data = { first_name: employeeFirstNameInput.value, last_name: employeeLastNameInput.value, position: employeePositionInput.value, contact_number: employeeContactNumberInput.value, email: employeeEmailInput.value, hire_date: employeeHireDateInput.value, salary: employeeSalaryInput.value ? parseFloat(employeeSalaryInput.value) : null };
             try {
                 const response = await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
                 const result = await response.json();
@@ -721,11 +627,8 @@
                 showMessage(result.message, 'success');
                 resetEmployeeForm();
                 await fetchEmployees().then(renderManagementEmployees);
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); }
         });
-
         async function deleteEmployee(id) {
             if (!confirm('Are you sure?')) return;
             try {
@@ -734,53 +637,34 @@
                 if (!response.ok) throw new Error(result.message);
                 showMessage(result.message, 'success');
                 await fetchEmployees().then(renderManagementEmployees);
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); }
         }
 
-        // --- Customer CRUD Functions ---
+        // --- Customer CRUD Operations ---
         async function fetchCustomers() {
              try {
                 const response = await fetch(`${API_BASE_URL}/customers`);
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                if (!response.ok) throw new Error('Failed to fetch');
                 customersData = await response.json();
                 return customersData;
-            } catch (error) {
-                showMessage(`Failed to load customers: ${error.message}`, 'error');
-                return [];
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); return []; }
         }
-
         function renderManagementCustomers(customers) {
             managementCustomersTableBody.innerHTML = '';
              if (customers.length === 0) {
-                 managementCustomersTableBody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-gray-500">No customers to manage.</td></tr>`;
+                 managementCustomersTableBody.innerHTML = `<tr><td colspan="4" class="text-center p-4">No customers.</td></tr>`;
                  return;
             }
             customers.forEach(cust => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="px-6 py-4">${cust.first_name} ${cust.last_name}</td>
-                    <td class="px-6 py-4">${cust.email || 'N/A'}</td>
-                    <td class="px-6 py-4">${cust.loyalty_points || 0}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="btn-secondary edit-customer-btn mr-2" data-customer-id="${cust.customer_id}">Edit</button>
-                        <button class="btn-danger delete-customer-btn" data-customer-id="${cust.customer_id}">Delete</button>
-                    </td>`;
+                row.innerHTML = `<td class="px-6 py-4">${cust.first_name} ${cust.last_name}</td><td class="px-6 py-4">${cust.email||'N/A'}</td><td class="px-6 py-4">${cust.loyalty_points||0}</td><td class="px-6 py-4 text-right"><button class="btn-secondary edit-customer-btn mr-2" data-customer-id="${cust.customer_id}">Edit</button><button class="btn-danger delete-customer-btn" data-customer-id="${cust.customer_id}">Delete</button></td>`;
                 managementCustomersTableBody.appendChild(row);
             });
         }
-        
         managementCustomersTableBody.addEventListener('click', event => {
-            if (event.target.classList.contains('edit-customer-btn')) {
-                editCustomer(parseInt(event.target.dataset.customerId));
-            }
-            if (event.target.classList.contains('delete-customer-btn')) {
-                deleteCustomer(parseInt(event.target.dataset.customerId));
-            }
+            if (event.target.classList.contains('edit-customer-btn')) editCustomer(parseInt(event.target.dataset.customerId));
+            if (event.target.classList.contains('delete-customer-btn')) deleteCustomer(parseInt(event.target.dataset.customerId));
         });
-
         function editCustomer(id) {
             const cust = customersData.find(c => c.customer_id === id);
             if (cust) {
@@ -794,29 +678,19 @@
                 cancelCustomerEditBtn.style.display = 'inline-block';
             }
         }
-        
         function resetCustomerForm() {
             customerForm.reset();
             customerIdInput.value = '';
             saveCustomerBtn.textContent = 'Add Customer';
             cancelCustomerEditBtn.style.display = 'none';
         }
-
         cancelCustomerEditBtn.addEventListener('click', resetCustomerForm);
-
         customerForm.addEventListener('submit', async event => {
             event.preventDefault();
             const id = customerIdInput.value;
             const url = id ? `${API_BASE_URL}/customers/${id}` : `${API_BASE_URL}/customers`;
             const method = id ? 'PUT' : 'POST';
-            const data = {
-                first_name: customerFirstNameInput.value,
-                last_name: customerLastNameInput.value,
-                contact_number: customerContactNumberInput.value,
-                email: customerEmailInput.value,
-                loyalty_points: customerLoyaltyPointsInput.value ? parseInt(customerLoyaltyPointsInput.value) : 0
-            };
-            
+            const data = { first_name: customerFirstNameInput.value, last_name: customerLastNameInput.value, contact_number: customerContactNumberInput.value, email: customerEmailInput.value, loyalty_points: customerLoyaltyPointsInput.value ? parseInt(customerLoyaltyPointsInput.value) : 0 };
             try {
                 const response = await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
                 const result = await response.json();
@@ -824,11 +698,8 @@
                 showMessage(result.message, 'success');
                 resetCustomerForm();
                 await fetchCustomers().then(renderManagementCustomers);
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); }
         });
-        
         async function deleteCustomer(id) {
             if (!confirm('Are you sure?')) return;
             try {
@@ -837,11 +708,8 @@
                 if (!response.ok) throw new Error(result.message);
                 showMessage(result.message, 'success');
                 await fetchCustomers().then(renderManagementCustomers);
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
+            } catch (error) { showMessage(`Error: ${error.message}`, 'error'); }
         }
-
     </script>
 </body>
 </html>
